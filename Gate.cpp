@@ -3,7 +3,7 @@
 #include "Gate.h"
 #include "std_lib_facilities_4.h"
 
-Gate::Gate(Gate* input1, Gate* input2, Operand type)
+Gate::Gate(Gate* input1, Gate* input2, Operand type, int position)
 : i1(input1), i2(input2), t(type), p(position){
     
     if (!is_gate(i1,i2,t)) throw Invalid();
@@ -25,7 +25,7 @@ Gate::Gate(Gate* input1, Gate* input2, Operand type)
     
 }
 
-Gate::Gate(Gate* input1, Operand type)
+Gate::Gate(Gate* input1, Operand type, int position)
 : i1(input1), t(type), p(position){
     
     if (!is_gate(i1,t)) throw Invalid();
@@ -49,7 +49,7 @@ bool Gate::is_gate(Gate* i1, Operand t){
     // also check to see if inputs are valid
 }
 
-Gate::ostream& operator<<(ostream& os, const Gate& g){
+ostream& operator<<(ostream& os, const Gate& g){
     
     string t;
     switch(g.type()){
@@ -59,16 +59,16 @@ Gate::ostream& operator<<(ostream& os, const Gate& g){
     }
     
     if(g.type() == Operand::NOT){
-        os << g.getPosition(); << ": (" << t << "," << g.input1()->getPosition() << ")";
+        os << g.getPosition() << ": (" << t << "," << g.input1()->getPosition() << ")";
     }
     else{
-        os << g.getPosition(); << ": (" << t <<","<< g.input1()->getPosition() << "," << g.input2->getPosition() <<")";
+        os << g.getPosition() << ": (" << t <<","<< g.input1()->getPosition() << "," << g.input2()->getPosition() <<")";
     }
     
     return os;
 }
 
-Gate::istream& operator>>(istream& is, Gate& g){
+istream& operator>>(istream& is, Gate& g){
     //read in
     
 }

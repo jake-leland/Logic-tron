@@ -26,7 +26,7 @@ public:
     Gate* input2() const {return i2;};
     Operand type() const {return t;};
     Vector<bool> getTable() const {return v;}
-    int getPosition() const {return p};
+    int getPosition() const {return p;};
     
     bool is_gate(Gate* i1, Gate* i2, Operand t);
     bool is_gate(Gate* i1, Operand t);
