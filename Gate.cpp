@@ -1,43 +1,50 @@
 //  Gate.cpp
 
 #include "Gate.h"
+#include "std_lib_facilities_4.h"
 
-Gate::Gate(int input1, int input2, Operand type)
+Gate::Gate(Gate* input1, Gate* input2, Operand type)
 : i1(input1), i2(input2), t(type){
+    
     if (!is_gate(i1,i2,t)) throw Invalid();
+    
+    Vector<bool> v1 = input1->getTable();
+    Vector<bool> v2 = input2->getTable();
+    Vector<bool> vFinal;
+    
+    if(type==Operand::AND){
+        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)&&v2.at(i));
+        
+    }
+    
+    else{
+        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)||v2.at(i));
+    }
+    
+    v=vFinal;
+    
 }
 
-bool Gate::is_gate(int i1, int i2, Operand t){
+Gate::Gate(Gate* input1, Operand type)
+: i1(input1), t(type){
+    
+    if (!is_gate(i1,t)) throw Invalid();
+    
+    Vector<bool> v1 = input1->getTable();
+    for(bool e: v1) v.push_back(!e);
+    
+}
+
+bool Gate::is_gate(Gate* i1, Gate* i2, Operand t){
     if ((t != Operand::AND) and (t != Operand::OR) and (t != Operand::NOT))
         return false;
     return true;
     // also check to see if inputs are valid
 }
 
-/*ostream& operator<<(ostream& os, const Gate& g)
-{
-    return os << '(' << g.input1()
-    << ',' << g.input2()
-    << ',' << g.type()
-    << ')';
+bool Gate::is_gate(Gate* i1, Operand t){
+    if ((t != Operand::AND) and (t != Operand::OR) and (t != Operand::NOT))
+        return false;
+    return true;
+    // also check to see if inputs are valid
 }
-
-//------------------------------------------------------------------------------
-
-istream& operator>>(istream& is, Gate& g)
-{
-    int i1, i2;
-    Operand t;
-    char ch1, ch2, ch3, ch4;
-    is >> ch1 >> i1 >> ch2 >> i2 >> ch3 >> t;
-    ch4 = t.at(t.size()-1);
-    t = t.substr(0,t.size()-1);
-    if (!is) return is;
-    if (ch1!='(' || ch2!=',' || ch3!=',' || ch4!=')') { // oops: format error
-        is.clear(ios_base::failbit);                    // set the fail bit
-        return is;
-    }
-    g = Gate(i1,i2,t);     // update dd
-    return is;
-}
-*/

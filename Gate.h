@@ -7,24 +7,27 @@ enum class Operand{
     AND = 1, OR, NOT};
 
 class Gate{
-    int i1;
-    int i2;
+    Gate* i1=NULL;
+    Gate* i2=NULL;
     Operand t;
+    Vector<bool> v;
     
 public:
     class Invalid { };
     
-    Gate(int input1, int input2, Operand type);
+    Gate(Gate* input1, Gate* input2, Operand type);
     
-    Gate(int input1, Operand type);
+    Gate(Gate* input1, Operand type);
     
     Gate();
     
-    int input1() const {return i1;};
-    int input2() const {return i2;};
+    Gate* input1() const {return i1;};
+    Gate* input2() const {return i2;};
     Operand type() const {return t;};
+    Vector<bool> getTable() const {return v;}
     
-    bool is_gate(int i1, int i2, Operand t);
+    bool is_gate(Gate* i1, Gate* i2, Operand t);
+    bool is_gate(Gate* i1, Operand t);
 };
 
 ostream& operator<<(ostream& os, const Gate& g);
