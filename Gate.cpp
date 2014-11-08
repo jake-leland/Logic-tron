@@ -2,19 +2,19 @@
 
 #include "Gate.h"
 
-Gate::Gate(int input1, int input2, String type)
+Gate::Gate(int input1, int input2, Operand type)
 : i1(input1), i2(input2), t(type){
     if (!is_gate(i1,i2,t)) throw Invalid();
 }
 
-bool Gate::is_gate(int i1, int i2, String t){
-    if (t != "AND" and t != "OR" and t != "NOT")
+bool Gate::is_gate(int i1, int i2, Operand t){
+    if ((t != Operand::AND) and (t != Operand::OR) and (t != Operand::NOT))
         return false;
     return true;
     // also check to see if inputs are valid
 }
 
-ostream& operator<<(ostream& os, const Gate& g)
+/*ostream& operator<<(ostream& os, const Gate& g)
 {
     return os << '(' << g.input1()
     << ',' << g.input2()
@@ -27,7 +27,7 @@ ostream& operator<<(ostream& os, const Gate& g)
 istream& operator>>(istream& is, Gate& g)
 {
     int i1, i2;
-    String t;
+    Operand t;
     char ch1, ch2, ch3, ch4;
     is >> ch1 >> i1 >> ch2 >> i2 >> ch3 >> t;
     ch4 = t.at(t.size()-1);
@@ -40,3 +40,4 @@ istream& operator>>(istream& is, Gate& g)
     g = Gate(i1,i2,t);     // update dd
     return is;
 }
+*/
