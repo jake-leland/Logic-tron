@@ -6,19 +6,19 @@
 
 #include "Gate.h"
 
+void save() {
+    return;
+}
+
+void load() {
+    return;
+}
+
 int main() {
     try { // attempt the program
         if(H112 != 201401L)error("Error: incorrect std_lib_facilities_4.h version ", H112);
         
-        /*
-        Simple_window win(Point(100,100),1024,768,"Logic-tron");
-        
-        win.wait_for_button();
-        */
-        
-        Gate g(1,2,"AND");
-        cin>>g;
-        cout<<g;
+        Vector_ref<Gate> gates;
         
         return 0;
     } catch (Gate::Invalid) {
