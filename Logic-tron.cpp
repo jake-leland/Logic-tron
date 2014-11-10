@@ -3,9 +3,11 @@
 #include "std_lib_facilities_4.h"
 
 #include "Gate.h"
+#include "GUI_window.h"
 
 Vector<Gate*> gate_pointers;
 
+/*
 void save(String filename) {
     ofstream ofs(filename.c_str());
     // throw an error if the file is unable to be opened
@@ -34,11 +36,13 @@ void load(String filename) {
     
     return;
 }
+ */
 
 int main() {
     try { // attempt the program
         if(H112 != 201401L)error("Error: incorrect std_lib_facilities_4.h version ", H112);
-
+        
+        GUI_window gui(1024,768);
         
         return 0;
     } catch (Gate::Invalid) {
