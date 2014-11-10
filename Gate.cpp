@@ -70,6 +70,6 @@ ostream& operator<<(ostream& os, const Gate& g){
 
 istream& operator>>(istream& is, Gate& g){
     //read in
-    
+    return is;
 }
 
