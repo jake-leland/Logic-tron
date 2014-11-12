@@ -8,18 +8,16 @@
 using namespace Graph_lib;
 
 class GUI_window : Graph_lib::Window{
-    bool updating;
+    Lines input_lines;
+    Button add_AND;
+    Button add_OR;
+    Button add_NOT;
+    //Vector_ref<Gate> gates; // future implementation with the Gate class
+    Vector_ref<Circle> gates; // for now
     
 public:
     GUI_window(int w = 1024, int h = 768);
     
-    static void cb_add_AND_click(Address b, Address pw);
-    void add_AND_click();
-    static void cb_add_OR_click(Address b, Address pw);
-    void add_OR_click();
-    static void cb_add_NOT_click(Address b, Address pw);
-    void add_NOT_click();
-    
-    void keep_open();
-    void update();
+    static void cb_click(Address, Address);
+    void click(Address);
 };

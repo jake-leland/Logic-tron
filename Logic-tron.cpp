@@ -44,7 +44,7 @@ int main() {
         
         GUI_window gui(1024,768);
         
-        return 0;
+        return gui_main();
     } catch (Gate::Invalid) {
         cerr << "Invalid gate\n";
         keep_window_open();
