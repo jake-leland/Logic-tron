@@ -8,7 +8,12 @@
 using namespace Graph_lib;
 
 class GUI_window : Graph_lib::Window{
+    int scale;
+    int label_size;
+    int padding_top;
+    int padding_side;
     Lines input_lines;
+    Vector_ref<Text> input_labels;
     Button add_AND;
     Button add_OR;
     Button add_NOT;
@@ -16,7 +21,7 @@ class GUI_window : Graph_lib::Window{
     Vector_ref<Circle> gates; // for now
     
 public:
-    GUI_window(int w = 1024, int h = 768);
+    GUI_window(int w = 1024, int h = 768, int s = 20);
     
     static void cb_click(Address, Address);
     void click(Address);
