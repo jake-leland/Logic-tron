@@ -9,4 +9,5 @@ Logic-tron (Honors group project for CSCE 121)
 To-Do
 -----
 * Derive `Gate` from `Shape`
-* Reading in and writing to a file
+* Reading from and writing to a file
+* Work on the TT_window class

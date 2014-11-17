@@ -4,6 +4,7 @@
 
 #include "Gate.h"
 #include "GUI_window.h"
+#include "TT_window.h"
 
 Vector<Gate*> gate_pointers;
 
@@ -42,7 +43,8 @@ int main() {
     try { // attempt the program
         if(H112 != 201401L)error("Error: incorrect std_lib_facilities_4.h version ", H112);
         
-        GUI_window gui(1024,768,20);
+        GUI_window gui;
+        TT_window tt;
         
         return gui_main();
     } catch (Gate::Invalid) {

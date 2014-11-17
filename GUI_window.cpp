@@ -1,4 +1,4 @@
-// Logic_GUI.cpp
+// GUI_window.cpp
 
 #include "Gate.h"
 #include "GUI_window.h"
@@ -22,16 +22,21 @@ add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", cb_click) {
     
     int label_height = label_size/1.4;
     int label_width = label_size/1.4;
+    int button_height = scale;
+    int button_width = scale;
     input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+label_height/2),"A"));
-    input_labels.push_back(new Text(Point(x_max()-padding_side+.5*label_width,padding_top+label_height/2),"1"));
+    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top-button_height/2),button_width,button_height,"1",cb_click));
     input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+scale+label_height/2),"B"));
-    input_labels.push_back(new Text(Point(x_max()-padding_side+.5*label_width,padding_top+scale+label_height/2),"2"));
+    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+scale-button_height/2),button_width,button_height,"2",cb_click));
     input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+2*scale+label_height/2),"C"));
-    input_labels.push_back(new Text(Point(x_max()-padding_side+.5*label_width,padding_top+2*scale+label_height/2),"3"));
+    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+2*scale-button_height/2),button_width,button_height,"3",cb_click));
     for (int i=0; i<input_labels.size(); ++i) {
         input_labels[i].set_font_size(label_size);
         input_labels[i].set_color(Color::black);
         attach(input_labels[i]);
+    }
+    for (int i=0; i<input_buttons.size(); ++i) {
+        attach(input_buttons[i]);
     }
     
     attach(add_AND);
@@ -51,33 +56,41 @@ void GUI_window::click(Address b)
     Fl_Button* button = &reference_to<Fl_Button>(b);
     String button_label = button->label();
     
+    if (button_label == "AND" or button_label == "OR" or button_label == "NOT") {
+        add_gate(button_label);
+    } else if (isdigit(stoi(button_label))) { // stoi(String) converts a string into an integer
+        // future implementation
+    } else {
+        cerr << "error: no action set for button\n";
+    }
+}
+
+void GUI_window::add_gate(String type) {
     int gate_padding_top = padding_top + 2.5*scale; // includes padding_top, and the padding needed to start below the initial three input lines
     int gate_padding_left = padding_side + 2*scale; // includes padding_left, and the padding needed to start indented from the initial three input lines
     
-    if (button_label == "AND") {
+    if (type == "AND") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::red);
         attach(gates[gates.size()-1]);
-    } else if (button_label == "OR") {
+    } else if (type == "OR") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::green);
         attach(gates[gates.size()-1]);
-    } else if (button_label == "NOT") {
+    } else if (type == "NOT") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::blue);
         attach(gates[gates.size()-1]);
     } else {
-        cerr << "error: button label not recognized";
+        cerr << "error: command not recognized\n";
     }
     
     input_lines.add(Point(gate_padding_left+2*scale*(gates.size()-1),gate_padding_top+scale/2+scale*(gates.size()-1)), Point(x_max()-padding_side,gate_padding_top+scale/2+scale*(gates.size()-1))); // we use gates.size()-1 because here, unlike in the cascading if-else block above, the new gate has already been added
     
-    int label_height = label_size/1.4;
-    int label_width = label_size/1.4;
-    input_labels.push_back(new Text(Point(x_max()-padding_side+.5*label_width,padding_top+(2+gates.size())*scale+label_height/2),to_string(gates.size()+3)));
-    input_labels[input_labels.size()-1].set_font_size(label_size);
-    input_labels[input_labels.size()-1].set_color(Color::black);
-    attach(input_labels[input_labels.size()-1]);
+    int button_height = scale;
+    int button_width = scale;
+    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+(2+gates.size())*scale-button_height/2),button_width,button_height,to_string(gates.size()+3),cb_click));
+    attach(input_buttons[input_buttons.size()-1]);
     
     redraw();
 }

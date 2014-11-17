@@ -1,4 +1,4 @@
-// Logic_GUI.h
+// GUI_window.h
 
 #include "std_lib_facilities_4.h"
 #include "Window.h"
@@ -17,6 +17,7 @@ class GUI_window : Graph_lib::Window{
     Button add_AND;
     Button add_OR;
     Button add_NOT;
+    Vector_ref<Button> input_buttons;
     //Vector_ref<Gate> gates; // future implementation with the Gate class
     Vector_ref<Circle> gates; // for now
     
@@ -25,4 +26,6 @@ public:
     
     static void cb_click(Address, Address);
     void click(Address);
+    
+    void add_gate(String);
 };
