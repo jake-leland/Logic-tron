@@ -6,10 +6,12 @@
 
 
 GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
+tt(),
 scale(s), // represents the number of pixels between input lines
 label_size(.7*scale),
 padding_top(h/20), // space between the top of the window and the uppermost input line
 padding_side(w/25), // space between the side of the window and the input lines
+seperator(Point(0,.8*y_max()),Point(x_max(),.8*y_max())),
 add_AND(Point(x_max()/2-250,y_max()-100), 100, 50, "AND", cb_click),
 add_OR(Point(x_max()/2-50,y_max()-100), 100, 50, "OR", cb_click),
 add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", cb_click) {
@@ -39,9 +41,21 @@ add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", cb_click) {
         attach(input_buttons[i]);
     }
     
+    seperator.set_color(Color::black);
+    seperator.set_style(Line_style::dash);
+    attach(seperator);
     attach(add_AND);
     attach(add_OR);
     attach(add_NOT);
+    
+    /*
+    gates.push_back(INITIAL INPUT A);
+    tt.add_column(gates[gates.size()-1]);
+    gates.push_back(INITIAL INPUT A);
+    tt.add_column(gates[gates.size()-1]);
+    gates.push_back(INITIAL INPUT A);
+    tt.add_column(gates[gates.size()-1]);
+    */
     
     redraw();
 }
@@ -72,15 +86,12 @@ void GUI_window::add_gate(String type) {
     if (type == "AND") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::red);
-        attach(gates[gates.size()-1]);
     } else if (type == "OR") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::green);
-        attach(gates[gates.size()-1]);
     } else if (type == "NOT") {
         gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
         gates[gates.size()-1].set_color(Color::blue);
-        attach(gates[gates.size()-1]);
     } else {
         cerr << "error: command not recognized\n";
     }
@@ -91,6 +102,9 @@ void GUI_window::add_gate(String type) {
     int button_width = scale;
     input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+(2+gates.size())*scale-button_height/2),button_width,button_height,to_string(gates.size()+3),cb_click));
     attach(input_buttons[input_buttons.size()-1]);
+    
+    attach(gates[gates.size()-1]);
+    //tt.add_column(gates[gates.size()-1]);
     
     redraw();
 }

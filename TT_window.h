@@ -8,10 +8,9 @@
 using namespace Graph_lib;
 
 class TT_window : Graph_lib::Window{
-    
+    Vector_ref<Out_box> columns;
 public:
     TT_window(int w = 640, int h = 480);
-    
-    static void cb_click(Address, Address);
-    void click(Address);
+
+    void add_column(Gate);
 };
