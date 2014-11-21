@@ -8,6 +8,13 @@
 
 Vector<Gate*> gate_pointers;
 
+int SCALE = 20;
+int LABEL_SIZE = .7*SCALE;
+int PADDING_TOP = 768/20;
+int PADDING_SIDE = 1024/25;
+int GATE_PADDING_TOP = PADDING_TOP + 2.5*SCALE;
+int GATE_PADDING_SIDE = PADDING_SIDE + 2*SCALE;
+
 /*
 void save(String filename) {
     ofstream ofs(filename.c_str());
