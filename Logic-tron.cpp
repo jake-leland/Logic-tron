@@ -4,9 +4,15 @@
 
 #include "Gate.h"
 #include "GUI_window.h"
-#include "TT_window.h"
 
 Vector<Gate*> gate_pointers;
+
+int SCALE = 20;
+int LABEL_SIZE = .7*SCALE;
+int PADDING_TOP = 768/20;
+int PADDING_SIDE = 1024/25;
+int GATE_PADDING_TOP = PADDING_TOP + 2.5*SCALE;
+int GATE_PADDING_SIDE = PADDING_SIDE + 2*SCALE;
 
 /*
 void save(String filename) {
@@ -44,7 +50,6 @@ int main() {
         if(H112 != 201401L)error("Error: incorrect std_lib_facilities_4.h version ", H112);
         
         GUI_window gui;
-        TT_window tt;
         
         return gui_main();
     } catch (Gate::Invalid) {
