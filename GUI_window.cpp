@@ -7,28 +7,7 @@
 #include <string>
 
 
-<<<<<<< HEAD
-GUI_window::GUI_window(int w, int h, int s) : 
-	Window(w, h, "Logic-tron"),
-	scale(s), // represents the number of pixels between input lines
-	label_size(.7*scale),
-	padding_top(h/20), // space between the top of the window and the uppermost input line
-	padding_side(w/25), // space between the side of the window and the input lines
-	//changed button callbacks to lambda functions to respective voids - HMB
-	add_AND(Point(x_max()/2-250,y_max()-100), 100, 50, "AND", 
-		[](Address, Address pw){ reference_to<GUI_window>(pw).add_AND_gate(); }),	
-	add_OR(Point(x_max()/2-50,y_max()-100), 100, 50, "OR", 
-		[](Address, Address pw){ reference_to<GUI_window>(pw).add_OR_gate(); }),
-	add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", 
-		[](Address, Address pw){ reference_to<GUI_window>(pw).add_NOT_gate(); }),
-	IN1(0), IN2(1), IN3(2){
-    //Add the input lines as special gates to the gates list
-    gates.push_back(IN1);
-    gates.push_back(IN2);
-    gates.push_back(IN3);
-    
-    //Drawing the input lines and labels
-=======
+
 GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 tt(),
 scale(s), // represents the number of pixels between input lines
@@ -36,91 +15,22 @@ label_size(.7*scale),
 padding_top(h/20), // space between the top of the window and the uppermost input line
 padding_side(w/25), // space between the side of the window and the input lines
 seperator(Point(0,.8*y_max()),Point(x_max(),.8*y_max())),
-add_AND(Point(x_max()/2-250,y_max()-100), 100, 50, "AND", cb_click),
-add_OR(Point(x_max()/2-50,y_max()-100), 100, 50, "OR", cb_click),
-add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", cb_click),
+	//changed button callbacks to lambda functions to respective voids - HMB
+	add_AND(Point(x_max()/2-250,y_max()-100), 100, 50, "AND", 
+		[](Address, Address pw){ reference_to<GUI_window>(pw).add_AND_gate(); }),	
+	add_OR(Point(x_max()/2-50,y_max()-100), 100, 50, "OR", 
+		[](Address, Address pw){ reference_to<GUI_window>(pw).add_OR_gate(); }),
+	add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT", 
+		[](Address, Address pw){ reference_to<GUI_window>(pw).add_NOT_gate(); }),
 i1(1,get_window_data()),
 i2(2,get_window_data()),
 i3(3,get_window_data()) {
     
-    attach(i1);
-    attach(i2);
-    attach(i3);
+    attach(i1); gates.push_back(i1);
+    attach(i2); gates.push_back(i2);
+    attach(i3); gates.push_back(i3);
     
-    /*
->>>>>>> FETCH_HEAD
-    input_lines.add(Point(padding_side,padding_top), Point(x_max()-padding_side,padding_top));
-    input_lines.add(Point(padding_side,padding_top+scale), Point(x_max()-padding_side,padding_top+scale));
-    input_lines.add(Point(padding_side,padding_top+2*scale), Point(x_max()-padding_side,padding_top+2*scale));
-    input_lines.set_color(Color::black);
-    attach(input_lines);
-
-    int label_height = label_size/1.4;
-    int label_width = label_size/1.4;
-    int button_height = scale;
-    int button_width = scale;
-<<<<<<< HEAD
-    
-//Might I suggest a quick loop like this instead of its following code? HMB    
-/*    string arr[] = {"A","B","C"};
-    for(int i = 0; i < 3; ++i){
-	Point txtPoint(padding_side - 1.5*label_width, 
-		padding_top + i*scale + label_height/2);
-	Point btnPoint( x_max() - padding_side + button_width/3,
-		padding_top + i*scale - button_height/2);
-	
-	input_labels.push_back( new Text( txtPoint, arr[i]) );
-	input_buttons.push_back( new Button( 
- *		btnPoint, 
- *		button_width, button_height,
- *		std::to_string(i),
- *		cb_click ) );
-    }*/
-    //Formatted for readability
-    input_labels.push_back(new Text(
-	    Point( padding_side-1.5*label_width,padding_top+label_height/2 ),
-	    "A"));
-    input_buttons.push_back(new Button(
-	    Point( x_max()-padding_side+button_width/3,padding_top-button_height/2 ),
-	    button_width,button_height,
-	    "1",
-	    cb_click));
-    input_labels.push_back(new Text(
-	    Point( padding_side-1.5*label_width,padding_top+scale+label_height/2 )
-	    ,"B"));
-    input_buttons.push_back(new Button(
-	    Point(x_max()-padding_side+button_width/3,padding_top+scale-button_height/2),
-	    button_width, button_height,
-	    "2",
-	    cb_click));
-    input_labels.push_back(new Text(
-	    Point(padding_side-1.5*label_width,padding_top+2*scale+label_height/2),
-	    "C"));
-    input_buttons.push_back(new Button(
-	    Point(x_max()-padding_side+button_width/3,padding_top+2*scale-button_height/2),
-	    button_width,button_height,
-	    "3",
-	    cb_click));
-    
-    for (int i=0; i<input_labels.size(); ++i) {
-=======
-    input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+label_height/2),"A"));
-    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top-button_height/2),button_width,button_height,"1",cb_click));
-    
-    input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+scale+label_height/2),"B"));
-    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+scale-button_height/2),button_width,button_height,"2",cb_click));
-    input_labels.push_back(new Text(Point(padding_side-1.5*label_width,padding_top+2*scale+label_height/2),"C"));
-    input_buttons.push_back(new Button(Point(x_max()-padding_side+button_width/3,padding_top+2*scale-button_height/2),button_width,button_height,"3",cb_click));
-for (int i=0; i<input_labels.size(); ++i) {
->>>>>>> FETCH_HEAD
-        input_labels[i].set_font_size(label_size);
-        input_labels[i].set_color(Color::black);
-        attach(input_labels[i]);
-    }
-    for (int i=0; i<input_buttons.size(); ++i) {
-        attach(input_buttons[i]);
-    }
-    */
+  
     
     seperator.set_color(Color::black);
     seperator.set_style(Line_style::dash);
@@ -129,6 +39,18 @@ for (int i=0; i<input_labels.size(); ++i) {
     attach(add_OR);
     attach(add_NOT);
     
+    for(int i = 1; i < 4; ++i){
+	Point btnPoint( x_max() - padding_side + scale/3,
+		padding_top + (i-1)*scale - scale/2);
+	input_buttons.push_back( new Button( 
+ 		btnPoint, 
+ 		scale, scale,
+ 		std::to_string(i),
+ 		cb_click ) );
+	attach(input_buttons[i-1]);
+    }
+    input_lines.set_color(Color::black);
+    attach(input_lines);
     /*
     gates.push_back(INITIAL INPUT A);
     tt.add_column(gates[gates.size()-1]);
@@ -161,7 +83,7 @@ void GUI_window::click(Address b)
     
     if(isdigit(button_label[0])) {
 	input2_to_next = input1_to_next;
-	input1_to_next = stoi(button_label) - 1;
+	input1_to_next = stoi(button_label);
     } else {
 	cerr << "error: no action set for button\n";
     }
@@ -169,15 +91,16 @@ void GUI_window::click(Address b)
 
 void GUI_window::add_line(int i){
     input_lines.add(
-	    Point(GATE_PADDING_SIDE+2*SCALE*(i-3), GATE_PADDING_TOP+SCALE/2+SCALE*(i-3)),
-	    Point(x_max()-PADDING_SIDE,GATE_PADDING_TOP+SCALE/2+SCALE*(i-3)));
+	    Point(GATE_PADDING_SIDE+2*SCALE*(i-4), GATE_PADDING_TOP+SCALE/2+SCALE*(i-4)),
+	    Point(x_max()-PADDING_SIDE,GATE_PADDING_TOP+SCALE/2+SCALE*(i-4)));
     input_buttons.push_back(new Button(
 	    Point(x_max()-PADDING_SIDE+SCALE/3,
-		    PADDING_TOP+i*SCALE-SCALE/2),
+		    PADDING_TOP+(i-1)*SCALE-SCALE/2),
 	    SCALE,
 	    SCALE,
-	    to_string(i+1),
+	    to_string(i),
 	    cb_click));
+    
     attach(input_buttons[input_buttons.size()-1]);
 }
 
@@ -215,31 +138,18 @@ void GUI_window::add_line(int i){
 void GUI_window::add_AND_gate() {
     int n = gates.size();   //Position of gate being added
     
-<<<<<<< HEAD
     if( (input1_to_next == -1 ) || (input2_to_next == -1)){
 	cerr << "Insufficient gates chosen to add AND gate." << endl;
-=======
-    if (type == "AND") {
-        gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
-        gates[gates.size()-1].set_color(Color::red);
-        
-        //gates1.push_back(new Gate(&gates1[0], &gates1[1], Operand::AND, gates.size()));
-    } else if (type == "OR") {
-        gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
-        gates[gates.size()-1].set_color(Color::green);
-    } else if (type == "NOT") {
-        gates.push_back(new Circle(Point(gate_padding_left+2*scale*gates.size(),gate_padding_top+scale*gates.size()),scale/2));
-        gates[gates.size()-1].set_color(Color::blue);
->>>>>>> FETCH_HEAD
+
     } else {
 	gates.push_back(new Gate(
-		&gates[input1_to_next],
-		&gates[input2_to_next],
+		&gates[input1_to_next-1],
+		&gates[input2_to_next-1],
 		Operand::AND,
-		n));
+		n+1));
 	gates[n].set_color(Color::black);
 	attach(gates[n]);
-	add_line(n);
+	add_line(n+1);
 	
 	input1_to_next = -1;
 	input2_to_next = -1;
@@ -253,13 +163,13 @@ void GUI_window::add_OR_gate(){
 	cerr << "Insufficient gates chosen to add OR gate." << endl;
     } else {
 	gates.push_back(new Gate(
-		&gates[input1_to_next],
-		&gates[input2_to_next],
+		&gates[input1_to_next-1],
+		&gates[input2_to_next-1],
 		Operand::OR,
-		n));
+		n+1));
 	gates[n].set_color(Color::black);
 	attach(gates[n]);
-	add_line(n);
+	add_line(n+1);
 	
 	input1_to_next = -1;
 	input2_to_next = -1;
@@ -269,17 +179,16 @@ void GUI_window::add_OR_gate(){
 void GUI_window::add_NOT_gate(){
     int n = gates.size();   //Position of gate being added
     
-<<<<<<< HEAD
     if(input1_to_next == -1){
 	cerr << "Insufficient gates chosen to add NOT gate." << endl;
     } else {
 	gates.push_back(new Gate(
-		&gates[input1_to_next],
+		&gates[input1_to_next-1],
 		Operand::NOT,
-		n));
+		n+1));
 	gates[n].set_color(Color::black);
 	attach(gates[n]);
-	add_line(n);
+	add_line(n+1);
 	
 	input1_to_next = -1;
 	input2_to_next = -1;
@@ -288,13 +197,6 @@ void GUI_window::add_NOT_gate(){
 }
 
 
-		
-=======
-    attach(gates[gates.size()-1]);
-    //tt.add_column(gates[gates.size()-1]);
-    
-    redraw();
-}
 
 Vector<int> GUI_window::get_window_data() {
     Vector<int> data;
@@ -305,4 +207,4 @@ Vector<int> GUI_window::get_window_data() {
     data.push_back(padding_top);
     return data;
 }
->>>>>>> FETCH_HEAD
+

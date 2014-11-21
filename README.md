@@ -8,5 +8,5 @@ Logic-tron (Honors group project for CSCE 121)
 
 To-Do
 -----
-* Derive `Gate` from `Input`
 * Reading from and writing to a file
+* Displaying truth table
