@@ -162,6 +162,7 @@ void GUI_window::add_OR_gate(){
                                  n+1));
         gates[n].set_color(Color::black);
         attach(gates[n]);
+        tt.add_column(&gates[n]);
         add_line(n+1);
         
         input1_to_next = -1;
@@ -181,6 +182,7 @@ void GUI_window::add_NOT_gate(){
                                  n+1));
         gates[n].set_color(Color::black);
         attach(gates[n]);
+        tt.add_column(&gates[n]);
         add_line(n+1);
         
         input1_to_next = -1;

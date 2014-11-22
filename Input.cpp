@@ -60,6 +60,9 @@ input_label(Point(PADDING_SIDE-1.5*SCALE/2,PADDING_TOP+(p-1)*SCALE+SCALE/4),to_s
         throw std::invalid_argument("Bad constructor to input class");
     }
      */
+    
+    // for some reason, the above code doesn't compile in my IDE
+    // I'll just need to remember to return it to the prettier form before we turn it in
 }
 
 void Input::draw_lines() const {

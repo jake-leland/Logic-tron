@@ -8,9 +8,12 @@
 using namespace Graph_lib;
 
 class TT_window : Graph_lib::Window{
-    Vector_ref<Out_box> columns;
+    Vector_ref<Rectangle> rects;
+    Vector_ref<Text> headers;
+    Vector_ref<Vector_ref<Text>> columns;
+    Line l;
 public:
-    TT_window(int w = 640, int h = 480);
+    TT_window(int w = 550, int h = 220);
 
     void add_column(Gate*);
 };
