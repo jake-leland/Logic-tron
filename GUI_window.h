@@ -32,13 +32,13 @@ class GUI_window : Graph_lib::Window{
     Button add_OR;
     Button add_NOT;
     Vector_ref<Button> input_buttons;
-
+    
     Vector_ref<Gate> gates; // future implementation with the Gate class
-
+    
     int input1_to_next = -1;
     int input2_to_next = -1;
- //   Vector_ref<Gate> gates1; // future implementation with the Gate class
- //   Vector_ref<Circle> gates; // for now
+    //   Vector_ref<Gate> gates1; // future implementation with the Gate class
+    //   Vector_ref<Circle> gates; // for now
     Input i1;
     Input i2;
     Input i3;
@@ -49,22 +49,13 @@ public:
     static void cb_click(Address, Address);
     void click(Address);
     
-
-   // void add_gate(String);
+    
+    // void add_gate(String);
     void add_AND_gate();
     void add_OR_gate();
     void add_NOT_gate();
     void add_line(int i);
-
-    void add_gate(String);
     
-    Vector<int> get_window_data();
-    // Returns a vector of window data
-    // Certain properties of the window are stored at specific indices of this vector
-    // 0: width
-    // 1: height
-    // 2: scale
-    // 3: side padding
-    // 4: top padding
+    void add_gate(String);
 };
 #endif

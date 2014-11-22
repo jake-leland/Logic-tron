@@ -19,11 +19,11 @@ void save(String filename) {
     ofstream ofs(filename.c_str());
     // throw an error if the file is unable to be opened
     if (!ofs) error("can’t open output file ", filename);
-    
+ 
     for (auto g : gate_pointers) {
         ofs << *g;
     }
-    
+ 
     return;
 }
 
@@ -31,7 +31,7 @@ void load(String filename) {
     ifstream ifs(filename.c_str());
     // throw an error if the file is unable to be opened
     if (!ifs) error("can’t open input file ", filename);
-    
+ 
     while(!ifs.eof()) {
         Gate g;
         ifs >> g;

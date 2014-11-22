@@ -12,5 +12,5 @@ class TT_window : Graph_lib::Window{
 public:
     TT_window(int w = 640, int h = 480);
 
-    void add_column(Gate);
+    void add_column(Gate*);
 };

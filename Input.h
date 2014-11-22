@@ -6,16 +6,18 @@
 #include "std_lib_facilities_4.h"
 
 using namespace Graph_lib;
+extern int SCALE;
+extern int PADDING_TOP;
+extern int PADDING_SIDE;
 
 class Input : public Gate {
     //Vector<bool> table; Inherited from gate
     //int position; Inherited from gate
     Line input_line;
     Text input_label;
-    Text input_label_left;
     
 public:
-    Input(int, Vector<int>);
+    Input(int, int);
     Input();
     
     //Vector<bool> getTable() const {return table;} Inherited from gate
