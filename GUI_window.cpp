@@ -190,3 +190,7 @@ void GUI_window::add_NOT_gate(){
         redraw();
     }
 }
+
+void GUI_window::read_file(std::istream& is){
+    
+}

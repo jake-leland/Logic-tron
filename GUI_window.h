@@ -57,5 +57,6 @@ public:
     void add_line(int i);
     
     void add_gate(String);
+    void read_file(std::istream& is);
 };
 #endif
