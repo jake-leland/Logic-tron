@@ -3,6 +3,7 @@
 #include "Gate.h"
 #include "Input.h"
 #include "GUI_window.h"
+#include "Gate_reader.h"
 #include <FL/Fl_Button.H>
 #include <string>
 
@@ -22,6 +23,11 @@ add_OR(Point(x_max()/2-50,y_max()-100), 100, 50, "OR",
        [](Address, Address pw){ reference_to<GUI_window>(pw).add_OR_gate(); }),
 add_NOT(Point(x_max()/2+150,y_max()-100), 100, 50, "NOT",
         [](Address, Address pw){ reference_to<GUI_window>(pw).add_NOT_gate(); }),
+open(Point(x_max()-75,y_max()-100),50,25,"Open",
+	[](Address, Address pw){ reference_to<GUI_window>(pw).read_file(); }),
+save(Point(x_max()-75,y_max()-50),50,25,"Save",
+	[](Address, Address pw){ reference_to<GUI_window>(pw).save_file(); }),
+filename(Point(x_max()-150,y_max()-150),100,25,"filename"),
 i1(1,x_max()),
 i2(2,x_max()),
 i3(3,x_max()) {
@@ -38,7 +44,9 @@ i3(3,x_max()) {
     attach(add_AND);
     attach(add_OR);
     attach(add_NOT);
-    
+    attach(open);
+    attach(save);
+    attach(filename);
     for(int i = 1; i < 4; ++i){
         Point btnPoint( x_max() - padding_side + scale/3,
                        padding_top + (i-1)*scale - scale/2);
@@ -191,6 +199,41 @@ void GUI_window::add_NOT_gate(){
     }
 }
 
-void GUI_window::read_file(std::istream& is){
+void GUI_window::read_file(){
+    std::ifstream is("test1.txt",std::ifstream::in);
+    Gate_Reader reader(is);
+    reader.Read_file();
+    vector<Operand> ops = reader.Operand_tokens();
+    vector<int> ins1 = reader.Input1_tokens();
+    vector<int> ins2 = reader.Input2_tokens();
     
+    for(int i = 0; i < ops.size(); ++i){
+	input1_to_next = ins1[i];
+	input2_to_next = ins2[i];
+	Operand op = ops[i];
+	switch(op){
+	case Operand::AND:
+	    add_AND_gate();
+	    break;
+	case Operand::OR:
+	    add_OR_gate();
+	    break;
+	case Operand::NOT :
+	    add_NOT_gate();
+	    break;
+	default:
+	    break;
+	}
+    }
+    is.close();
+}
+
+void GUI_window::save_file(){
+    string file = filename.get_string();
+    if(file == "") return;
+    std::ofstream os(file, std::ofstream::out);
+    for(int i = 3; i < gates.size(); ++i){
+	os << gates[i] << endl;
+    }
+    os.close();
 }

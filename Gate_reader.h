@@ -36,9 +36,9 @@ public:
     Gate_Reader (ifstream& is);
     void Open(string file);
     void Read_file();
-    vector<Operand> Operand_tokens();
-    vector<int> Input1_tokens();
-    vector<int> Input2_tokens();
+    vector<Operand> Operand_tokens() { return ops;}
+    vector<int> Input1_tokens() { return in1; }
+    vector<int> Input2_tokens() {return in2; }
     
 };
 

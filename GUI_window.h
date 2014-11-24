@@ -31,6 +31,9 @@ class GUI_window : Graph_lib::Window{
     Button add_AND;
     Button add_OR;
     Button add_NOT;
+    Button open;
+    Button save;
+    In_box filename;
     Vector_ref<Button> input_buttons;
     
     Vector_ref<Gate> gates; // future implementation with the Gate class
@@ -57,6 +60,7 @@ public:
     void add_line(int i);
     
     void add_gate(String);
-    void read_file(std::istream& is);
+    void read_file();
+    void save_file();
 };
 #endif
