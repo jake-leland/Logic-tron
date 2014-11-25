@@ -16,6 +16,11 @@ Gate::Gate(Gate* input1, Gate* input2, Operand type, int position)
     Vector<bool> v2 = input2->getTable();
     Vector<bool> vFinal;
     
+    if(type==Operand::AND){
+        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)&&v2.at(i));}
+    else{
+        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)||v2.at(i));}
+    
     table=vFinal;
     //Change to 0 to stope debug messages
 #if 1
@@ -96,8 +101,13 @@ void Gate::draw_lines() const{
         fl_line(ul.x,ul.y,ul.x+SCALE,ul.y);
         fl_line(ul.x+SCALE,ul.y,ul.x+SCALE,ul.y+SCALE/2);
     } else if (t==Operand::OR){
-        //Need something fancy for OR gate symbol
-        fl_arc(ul.x,ul.y,SCALE,SCALE,0,360);
+        fl_arc(ul.x,ul.y,SCALE,SCALE,180,360);
+        fl_line(ul.x,ul.y+SCALE/2,ul.x,ul.y);
+        fl_line(ul.x+SCALE,ul.y,ul.x+SCALE,ul.y+SCALE/2);
+        fl_arc(ul.x,ul.y-SCALE/2,SCALE,SCALE,180,360);
+        fl_arc(ul.x+SCALE/2-1,ul.y+SCALE-1,4,4,0,360);
+        fl_line(ul.x+SCALE/4,ul.y,ul.x+SCALE/4,ul.y+SCALE/3);
+        fl_line(ul.x+3*SCALE/4,ul.y,ul.x+3*SCALE/4,ul.y+SCALE/3);
     } else if (t==Operand::NOT){
         fl_line(ul.x,ul.y,ul.x+SCALE,ul.y);
         fl_line(ul.x+SCALE,ul.y,ul.x+SCALE/2,ul.y+SCALE);
