@@ -16,25 +16,6 @@ Gate::Gate(Gate* input1, Gate* input2, Operand type, int position)
     Vector<bool> v2 = input2->getTable();
     Vector<bool> vFinal;
     
-    if(type==Operand::AND){
-        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)&&v2.at(i));
-        /*    To be filled in with actual shapes
-         v.push_back(new fl_arc(100.0, 100.0, 50.0, 0.0, 180.0) );
-         v.push_back(new Line());
-         v.push_back(new Circle(Point(x+(r/4),y-(r/4)),r/8));
-         */
-        
-    }
-    
-    else{
-        for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)||v2.at(i));
-        /*   To be filled in with actual shapes
-         v.push_back(new fl_arc(100.0, 100.0, 50.0, 0.0, 180.0) );
-         v.push_back(new Line());
-         v.push_back(new Circle(Point(x+(r/4),y-(r/4)),r/8));
-         */
-    }
-    
     table=vFinal;
     //Change to 0 to stope debug messages
 #if 1
@@ -65,11 +46,6 @@ Gate::Gate(Gate* input1, Operand type, int position)
     Vector<bool> v1 = input1->getTable();
     for(bool e: v1) table.push_back(!e);
     
-    /*   To be filled in with actual shapes
-     v.push_back(new fl_arc(100.0, 100.0, 50.0, 0.0, 180.0) );
-     v.push_back(new Line());
-     v.push_back(new Circle(Point(x+(r/4),y-(r/4)),r/8));
-     */
 #if 1
     cout << "NOT Gate " << p <<" constructed  as follows: " << endl;
     cout << "Input 1: ";
@@ -112,6 +88,7 @@ void Gate::draw_lines() const{
              gate_padding_top+SCALE*(p-4) -0.5*SCALE);
     
     fl_color(color().as_int());
+    
     //Draw gate symbol
     if(t==Operand::AND){
         fl_arc(ul.x,ul.y,SCALE,SCALE,180,360);
@@ -127,6 +104,7 @@ void Gate::draw_lines() const{
         fl_line(ul.x+SCALE/2,ul.y+SCALE,ul.x,ul.y);
         fl_arc(ul.x+SCALE/2-1,ul.y+SCALE-1,4,4,0,360);
     }
+    
     //Draw lines to input lines
     int iny1 = gate_padding_top + SCALE*((i1->p)-3) - .5*SCALE;
     int iny2 = 0;
