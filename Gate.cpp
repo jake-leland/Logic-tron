@@ -106,7 +106,7 @@ void Gate::draw_lines() const{
         fl_line(ul.x,ul.y,ul.x+(.8*SCALE),ul.y);
         fl_line(ul.x+(.8*SCALE),ul.y,ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE));
         fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x,ul.y);
-        fl_arc(ul.x+(.8*SCALE)/2-1,ul.y+(.6*SCALE)-1,4,4,0,360);
+        fl_circle(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE), SCALE/10);
     }
     
     //Draw lines to input lines
@@ -115,9 +115,12 @@ void Gate::draw_lines() const{
     if(i2) iny2 = GATE_PADDING_TOP + SCALE*((i2->p)-3) - .5*SCALE;
     if(t == Operand::NOT){
         fl_line(ul.x+(.8*SCALE)/2, ul.y, ul.x+(.8*SCALE)/2, iny1);
+        fl_circle(ul.x+(.8*SCALE)/2, iny1, 1);
     } else {
         fl_line(ul.x+(.8*SCALE)/4,ul.y,ul.x+(.8*SCALE)/4, iny1);
+        fl_circle(ul.x+(.8*SCALE)/4, iny1, 1);
         fl_line(ul.x+3*(.8*SCALE)/4,ul.y,ul.x+3*(.8*SCALE)/4, iny2);
+        fl_circle(ul.x+3*(.8*SCALE)/4, iny2, 1);
     }
     fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x+(.8*SCALE)/2,GATE_PADDING_TOP+SCALE/2+SCALE*(p-4));
 
