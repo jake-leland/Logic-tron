@@ -86,45 +86,41 @@ bool Gate::is_gate(Gate* i1, Operand t){
 void Gate::draw_lines() const{
     if(t == Operand::NONE) return;
     
-    int gate_padding_top = PADDING_TOP+ 2.5*SCALE;
-    int gate_padding_left = PADDING_SIDE + 2*SCALE;
-    
-    Point ul(gate_padding_left + 2*SCALE*(p-4) - .5*SCALE,
-             gate_padding_top+SCALE*(p-4) -0.5*SCALE);
+    Point ul(GATE_PADDING_SIDE + 2*SCALE*(p-4) - .4*SCALE,
+             GATE_PADDING_TOP+SCALE*(p-4) -0.3*SCALE);
     
     fl_color(color().as_int());
     
     //Draw gate symbol
     if(t==Operand::AND){
-        fl_arc(ul.x,ul.y,SCALE,SCALE,180,360);
-        fl_line(ul.x,ul.y+SCALE/2,ul.x,ul.y);
-        fl_line(ul.x,ul.y,ul.x+SCALE,ul.y);
-        fl_line(ul.x+SCALE,ul.y,ul.x+SCALE,ul.y+SCALE/2);
+        fl_arc(ul.x,ul.y,.8*SCALE,.6*SCALE,180,360);
+        fl_line(ul.x,ul.y+(.6*SCALE)/2,ul.x,ul.y);
+        fl_line(ul.x,ul.y,ul.x+(.8*SCALE),ul.y);
+        fl_line(ul.x+(.8*SCALE),ul.y,ul.x+(.8*SCALE),ul.y+(.6*SCALE)/2);
     } else if (t==Operand::OR){
-        fl_arc(ul.x,ul.y,SCALE,SCALE,180,360);
-        fl_line(ul.x,ul.y+SCALE/2,ul.x,ul.y);
-        fl_line(ul.x+SCALE,ul.y,ul.x+SCALE,ul.y+SCALE/2);
-        fl_arc(ul.x,ul.y-SCALE/2,SCALE,SCALE,180,360);
-        fl_arc(ul.x+SCALE/2-1,ul.y+SCALE-1,4,4,0,360);
-        fl_line(ul.x+SCALE/4,ul.y,ul.x+SCALE/4,ul.y+SCALE/3);
-        fl_line(ul.x+3*SCALE/4,ul.y,ul.x+3*SCALE/4,ul.y+SCALE/3);
+        fl_arc(ul.x,ul.y-(.6*SCALE)/2,.8*SCALE,.9*SCALE,180,360);
+        fl_arc(ul.x,ul.y-(.6*SCALE)/2,.8*SCALE,.6*SCALE,180,360);
+        fl_line(ul.x+(.8*SCALE)/4,ul.y,ul.x+(.8*SCALE)/4,ul.y+(.6*SCALE)/3);
+        fl_line(ul.x+3*(.8*SCALE)/4,ul.y,ul.x+3*(.8*SCALE)/4,ul.y+(.6*SCALE)/3);
     } else if (t==Operand::NOT){
-        fl_line(ul.x,ul.y,ul.x+SCALE,ul.y);
-        fl_line(ul.x+SCALE,ul.y,ul.x+SCALE/2,ul.y+SCALE);
-        fl_line(ul.x+SCALE/2,ul.y+SCALE,ul.x,ul.y);
-        fl_arc(ul.x+SCALE/2-1,ul.y+SCALE-1,4,4,0,360);
+        fl_line(ul.x,ul.y,ul.x+(.8*SCALE),ul.y);
+        fl_line(ul.x+(.8*SCALE),ul.y,ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE));
+        fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x,ul.y);
+        fl_arc(ul.x+(.8*SCALE)/2-1,ul.y+(.6*SCALE)-1,4,4,0,360);
     }
     
     //Draw lines to input lines
-    int iny1 = gate_padding_top + SCALE*((i1->p)-3) - .5*SCALE;
+    int iny1 = GATE_PADDING_TOP + SCALE*((i1->p)-3) - .5*SCALE;
     int iny2 = 0;
-    if(i2) iny2 = gate_padding_top + SCALE*((i2->p)-3) - .5*SCALE;
+    if(i2) iny2 = GATE_PADDING_TOP + SCALE*((i2->p)-3) - .5*SCALE;
     if(t == Operand::NOT){
-        fl_line(ul.x+SCALE/2, ul.y, ul.x+SCALE/2, iny1);
+        fl_line(ul.x+(.8*SCALE)/2, ul.y, ul.x+(.8*SCALE)/2, iny1);
     } else {
-        fl_line(ul.x+SCALE/4,ul.y,ul.x+SCALE/4, iny1);
-        fl_line(ul.x+3*SCALE/4,ul.y,ul.x+3*SCALE/4, iny2);
+        fl_line(ul.x+(.8*SCALE)/4,ul.y,ul.x+(.8*SCALE)/4, iny1);
+        fl_line(ul.x+3*(.8*SCALE)/4,ul.y,ul.x+3*(.8*SCALE)/4, iny2);
     }
+    fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x+(.8*SCALE)/2,GATE_PADDING_TOP+SCALE/2+SCALE*(p-4));
+
 }
 
 ostream& operator<<(ostream& os, const Gate& g){
