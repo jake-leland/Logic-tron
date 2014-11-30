@@ -7,22 +7,25 @@
 #include <FL/fl_draw.H>
 #include <FL/Fl_Image.H>
 
-Gate::Gate(Gate* input1, Gate* input2, Operand type, int position)
-: i1(input1), i2(input2), t(type), p(position){
+Gate::Gate(Gate* input1, Gate* input2, Operand type, int position):
+	i1(input1), i2(input2), t(type), p(position)
+	{
     
     if (!is_gate(i1,i2,t)) throw Invalid();
     
     Vector<bool> v1 = input1->getTable();
     Vector<bool> v2 = input2->getTable();
     Vector<bool> vFinal;
-    
+//    in_text = new Text(Point(X_MAX - PADDING_SIDE +4*SCALE/3, 
+//		PADDING_TOP + p*SCALE - SCALE/2), "");
+//    in_text->set_color(Color::black);
     if(type==Operand::AND){
         for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)&&v2.at(i));}
     else{
         for(int i=0; i<v1.size(); ++i) vFinal.push_back(v1.at(i)||v2.at(i));}
     
     table=vFinal;
-    //Change to 0 to stope debug messages
+    //Change to 0 to stop debug messages
 #if 1
     cout << (t == Operand::AND ? "AND" : "OR" ) << " Gate " << p << " constructed as follows:\n"
     << "Input 1: ";
@@ -50,6 +53,9 @@ Gate::Gate(Gate* input1, Operand type, int position)
     
     Vector<bool> v1 = input1->getTable();
     for(bool e: v1) table.push_back(!e);
+//    in_text = new Text(Point(X_MAX - PADDING_SIDE +4*SCALE/3, 
+//		PADDING_TOP + p*SCALE - SCALE/2), "");
+//    in_text->set_color(Color::black);
     
 #if 1
     cout << "NOT Gate " << p <<" constructed  as follows: " << endl;
@@ -67,6 +73,9 @@ Gate::Gate(Gate* input1, Operand type, int position)
 }
 
 Gate::Gate(int position) : i1(NULL), i2(NULL), t(Operand::NONE), p(position){
+//    in_text = new Text(Point(X_MAX - PADDING_SIDE +4*SCALE/3, 
+//		PADDING_TOP + p*SCALE - SCALE/2), "");
+//    in_text->set_color(Color::black);
 }
 
 bool Gate::is_gate(Gate* i1, Gate* i2, Operand t){
@@ -124,6 +133,7 @@ void Gate::draw_lines() const{
     }
     fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x+(.8*SCALE)/2,GATE_PADDING_TOP+SCALE/2+SCALE*(p-4));
 
+    //in_text->draw_lines();
 }
 
 ostream& operator<<(ostream& os, const Gate& g){

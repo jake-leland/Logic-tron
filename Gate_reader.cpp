@@ -3,6 +3,26 @@
 
 #include "Gate_reader.h"
 
+/*
+ * regex gate_pat
+ * This member is constructed using the C++11 features of raw string literals
+ * and initializing braces.
+ * This regex type tells the class we expect the line to match the following pattern:
+ *	Start with a number and a colon;
+ *	Optionally any amount of whitespace;
+ *	Opening parenthesis, followed by an alphabetical string, then a comma;
+ *	A numeric string;
+ *	Optionally, a comma and a second numeric string;
+ *	Close parenthesis;
+ * Example: 
+ *	4:(AND,1,2)
+ *	5:	(NOT,3)
+ * 
+ * Each line is checked to match this pattern, then the get_ functions set
+ * the operand and inputs read. Should no error be thrown the data is pushed
+ * onto the vectors. Once every line is read without error the vectors are ready to
+ * be returned.
+ */
 regex Gate_Reader::gate_pat{R"(\d+:\s*\(([[:alpha:]]+),(\d+)(,(\d+))?\))"};
 
 Gate_Reader::Gate_Reader(ifstream& is) : infile(is),ops(),in1(),in2() {

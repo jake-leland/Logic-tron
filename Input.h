@@ -10,6 +10,9 @@ extern int SCALE;
 extern int PADDING_TOP;
 extern int PADDING_SIDE;
 
+/* Input class - A specialization of gate that is initialized with the GUI window
+ * We expect only three to be initialized per window
+ */
 class Input : public Gate {
     //Vector<bool> table; Inherited from gate
     //int position; Inherited from gate

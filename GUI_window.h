@@ -19,14 +19,28 @@ extern int PADDING_SIDE;
 extern int GATE_PADDING_TOP;
 extern int GATE_PADDING_SIDE;
 
+//Need a new class that is not only a collection of lines, but also
+//has the ability to remove lines
+class Line_stack : public Shape{
+    vector<Line*> v;
+public:
+    Line_stack();
+    void set_color(Color c);
+
+    void draw_lines() const;
+    
+    void add(Point p1, Point p2);
+    void clear();
+    void rm_line(); 
+};
+
 class GUI_window : Graph_lib::Window{
     TT_window tt;
     int scale;
     int label_size;
     int padding_top;
     int padding_side;
-    Lines input_lines;
-    Vector_ref<Text> input_labels;
+    Line_stack input_lines;
     Line seperator;
     Button add_AND;
     Button add_OR;
@@ -34,18 +48,25 @@ class GUI_window : Graph_lib::Window{
     Button open;
     Button save;
     In_box filename;
-    Vector_ref<Button> input_buttons;
+    vector<Button*> input_buttons;
     
-    Vector_ref<Gate> gates; // future implementation with the Gate class
+    //Vector_ref<Gate> gates; // future implementation with the Gate class
+    vector<Gate *> gates;
     
     int input1_to_next = -1;
     int input2_to_next = -1;
+//    Text * in1_text;
+//    Text * in2_text;
     //   Vector_ref<Gate> gates1; // future implementation with the Gate class
     //   Vector_ref<Circle> gates; // for now
     Input i1;
     Input i2;
     Input i3;
     
+    void clear_board();
+    void rm_btn();
+    void rm_line();
+    void rm_gate();
 public:
     GUI_window(int w = 1024, int h = 768, int s = 20);
     
@@ -62,5 +83,6 @@ public:
     void add_gate(String);
     void read_file();
     void save_file();
+    virtual ~GUI_window();
 };
 #endif

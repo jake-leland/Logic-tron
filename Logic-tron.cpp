@@ -7,6 +7,7 @@
 
 Vector<Gate*> gate_pointers;
 
+int X_MAX = 1024;
 int SCALE = 20;
 int LABEL_SIZE = .7*SCALE;
 int PADDING_TOP = 768/20;

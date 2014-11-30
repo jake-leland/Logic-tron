@@ -8,6 +8,7 @@
 #include <FL/fl_draw.H>
 #include <FL/Fl_Image.H>
 using namespace Graph_lib;
+extern int X_MAX;
 extern int SCALE;
 extern int PADDING_TOP;
 extern int PADDING_SIDE;
@@ -19,6 +20,7 @@ enum class Operand{
 };
 
 class Gate : public Shape {
+    friend class GUI_window;	//just in case
 protected:
     Vector_ref<Shape> shapes;
     Gate* i1=NULL;
@@ -26,7 +28,7 @@ protected:
     Operand t;
     Vector<bool> table;
     int p;
-    
+    Text * in_text;
     
 public:
     

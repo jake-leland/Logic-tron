@@ -2,18 +2,13 @@
 
 #include "Input.h"
 
-// Window Data
-// 0: width
-// 1: height
-// 2: scale
-// 3: side padding
-// 4: top padding
-
 
 Input::Input(int pos, int win_width) :
-Gate(pos),
-input_line(Point(PADDING_SIDE,PADDING_TOP+(p-1)*SCALE), Point(win_width-PADDING_SIDE,PADDING_TOP+(p-1)*SCALE)),
-input_label(Point(PADDING_SIDE-1.5*SCALE/2,PADDING_TOP+(p-1)*SCALE+SCALE/4),to_string(static_cast<char>(64+p)))
+	Gate(pos),
+	input_line(Point(PADDING_SIDE,PADDING_TOP+(p-1)*SCALE), 
+		Point(win_width-PADDING_SIDE,PADDING_TOP+(p-1)*SCALE)),
+	input_label(Point(PADDING_SIDE-1.5*SCALE/2,PADDING_TOP+(p-1)*SCALE+SCALE/4),
+		to_string(static_cast<char>(64+p)))
 {
     input_line.set_color(Color::black);
     input_label.set_color(Color::black);
