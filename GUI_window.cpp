@@ -298,6 +298,7 @@ void GUI_window::clear_board(){
     int n = input_buttons.size();
     for(int i = n-1; i > 2; --i){
 	rm_btn();
+	tt.rm_column();
     }
 }
 

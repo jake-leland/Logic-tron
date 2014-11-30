@@ -8,12 +8,14 @@
 using namespace Graph_lib;
 
 class TT_window : Graph_lib::Window{
-    Vector_ref<Rectangle> rects;
-    Vector_ref<Text> headers;
-    Vector_ref<Vector_ref<Text>> columns;
+    vector<Rectangle*> rects;
+    vector<Text*> headers;
+    vector< vector<Text*> > columns;
     Line l;
 public:
     TT_window(int w = 550, int h = 220);
 
     void add_column(Gate*);
+    void rm_column();
+    //~TT_window();
 };
