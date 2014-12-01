@@ -22,23 +22,20 @@ void TT_window::add_column(Gate* g) {
     } else {
         rects[rects.size()-1]->set_fill_color(Color::dark_blue);
     }
-    attach(*rects[rects.size()-1]);
-    
+    attach(*rects[rects.size()-1]); // background color
     headers.push_back(new Text(Point(21+20*headers.size(),32),to_string(g->getPosition())));
     headers[headers.size()-1]->set_color(Color::white);
     attach(*headers[headers.size()-1]);
     
-    Vector<bool> table = g->getTable();
     columns.push_back(vector<Text*>());
-    
+    Vector<bool> table = g->getTable();
     for(bool b : table) {
         String b_str(b?"1":"0"); // converts boolean to "0" or "1"
         columns[columns.size()-1].push_back(new Text(Point(21+20*(columns.size()-1),56+20*columns[columns.size()-1].size()),b_str));
         columns[columns.size()-1][columns[columns.size()-1].size()-1]->set_color(Color::white);
         attach(*columns[columns.size()-1][columns[columns.size()-1].size()-1]);
     }
-    
-    attach(l);
+    attach(l); // dotted line seperating the header text from the table contents
     redraw();
 }
 

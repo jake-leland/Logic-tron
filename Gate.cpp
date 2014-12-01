@@ -92,6 +92,7 @@ bool Gate::is_gate(Gate* i1, Operand t){
     // also check to see if inputs are valid
 }
 
+/* !!!!!!!!!! FUNCTION LENGTH !!!!!!!!!! */
 void Gate::draw_lines() const{
     if(t == Operand::NONE) return;
     

@@ -53,7 +53,7 @@ void Gate_Reader::get_positions(smatch& matches) {
     }
 }
 
-
+/* !!!!!!!!!! FUNCTION LENGTH !!!!!!!!!! */
 void Gate_Reader::Read_file(){
     int lineno = 0;
     try{

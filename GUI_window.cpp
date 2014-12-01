@@ -249,6 +249,7 @@ void GUI_window::add_NOT_gate(){
     }
 }
 
+/* !!!!!!!!!! FUNCTION LENGTH !!!!!!!!!! */
 void GUI_window::read_file() {
     try {
 	std::ifstream is(filename.get_string() , std::ifstream::in);
