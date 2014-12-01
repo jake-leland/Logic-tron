@@ -7,6 +7,7 @@
 
 using namespace Graph_lib;
 
+// The TT_window displays the columns of the truth table that correspond with the gates in the GUI_window
 class TT_window : Graph_lib::Window{
     vector<Rectangle*> rects;
     vector<Text*> headers;

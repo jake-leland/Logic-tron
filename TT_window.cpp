@@ -12,6 +12,8 @@ l(Point(15,39),Point(535,39)) {
     redraw();
 }
 
+// function accepts a gate pointer, then retrieves the truth table information from that gate
+// a new column is automatically added that displays this truth table
 void TT_window::add_column(Gate* g) {
     rects.push_back(new Rectangle(Point(15+20*rects.size(),15),20,190));
     rects[rects.size()-1]->set_color(Color::black);
@@ -40,6 +42,8 @@ void TT_window::add_column(Gate* g) {
     redraw();
 }
 
+// removes the most recently added column
+// as if popping off of a stack
 void TT_window::rm_column(){
     int n = rects.size() - 1;
     detach(*rects[n]);

@@ -154,8 +154,3 @@ ostream& operator<<(ostream& os, const Gate& g){
     
     return os;
 }
-
-//istream& operator>>(istream& is, Gate& g){
-//    
-//}
-

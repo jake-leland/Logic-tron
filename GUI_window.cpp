@@ -55,24 +55,26 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	seperator(Point(0, .8 * y_max()), Point(x_max(), .8 * y_max())),
 	input_lines(),
 //Button initialization. Self explanitory
-	add_AND(Point(x_max() / 2 - 250, y_max() - 100), 100, 50, "AND",
+	add_AND(Point(x_max() / 2 - 400, y_max() - 125), 100, 50, "AND",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_AND_gate(); }),
-	add_OR(Point(x_max() / 2 - 50, y_max() - 100), 100, 50, "OR",
+	add_OR(Point(x_max() / 2 - 200, y_max() - 125), 100, 50, "OR",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_OR_gate(); }),
-	add_NOT(Point(x_max() / 2 + 150, y_max() - 100), 100, 50, "NOT",
+	add_NOT(Point(x_max() / 2, y_max() - 125), 100, 50, "NOT",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_NOT_gate(); }),
-	open(Point(x_max() - 75, y_max() - 100), 50, 25, "Open",
+	open(Point(x_max() - 200, y_max() - 100), 50, 25, "Open",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).read_file(); }),
-	save(Point(x_max() - 75, y_max() - 50), 50, 25, "Save",
+	save(Point(x_max() - 150, y_max() - 100), 50, 25, "Save",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).save_file(); }),
 //In-box for typing filename of file to read/write
-	filename(Point(x_max() - 150, y_max() - 150), 100, 25, "filename"),
-//Initialize three circuit inputs
+	filename(Point(x_max() - 200, y_max() - 125), 100, 25, "filename"),
+//Instructional text to assist the user
+    instr(Point(40,y_max()-25),"First, click the numbered buttons corresponding to the desired inputs for the new gate. Then, click the button corresponding to the desired gate type."),
+//Initialize three initial circuit inputs (A, B, and C)
 	i1(1, x_max()),
 	i2(2, x_max()),
 	i3(3, x_max())/*,
@@ -88,7 +90,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(i3);
     gates.push_back(&i3);
     tt.add_column(&i3);
-//Attach other window features
+//Attach toolbar at the bottom of the window
     seperator.set_color(Color::black);
     seperator.set_style(Line_style::dash);
     attach(seperator);
@@ -98,6 +100,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(open);
     attach(save);
     attach(filename);
+    attach(instr);
 //Initialize the first three input buttons
     for (int i = 1; i < 4; ++i) {
 	Point btnPoint(x_max() - padding_side + scale / 3,
@@ -153,10 +156,15 @@ void GUI_window::click(Address b)
     }
 }
 
+// adds a new input line to the screen
+// also adds a button on the right edge of the screen for selecting that input
 void GUI_window::add_line(int i) {
+    // input line
     input_lines.add(
 	    Point(GATE_PADDING_SIDE + 2 * SCALE * (i - 4), GATE_PADDING_TOP + SCALE / 2 + SCALE * (i - 4)),
 	    Point(x_max() - PADDING_SIDE, GATE_PADDING_TOP + SCALE / 2 + SCALE * (i - 4)));
+    
+    // input button
     input_buttons.push_back(new Button(
 	    Point(x_max() - PADDING_SIDE + SCALE / 3,
 	    PADDING_TOP + (i - 1) * SCALE - SCALE / 2),
@@ -168,6 +176,7 @@ void GUI_window::add_line(int i) {
     attach(*input_buttons[input_buttons.size() - 1]);
 }
 
+// funciton called when the user presses the AND button
 void GUI_window::add_AND_gate() {
     int n = gates.size(); //Position of gate being added
 
@@ -194,6 +203,8 @@ void GUI_window::add_AND_gate() {
 	redraw();
     }
 }
+
+// funciton called when the user presses the OR button
 void GUI_window::add_OR_gate(){
     int n = gates.size();   //Position of gate being added
     
@@ -215,6 +226,8 @@ void GUI_window::add_OR_gate(){
         redraw();
     }
 }
+
+// funciton called when the user presses the NOT button
 void GUI_window::add_NOT_gate(){
     int n = gates.size();   //Position of gate being added
     

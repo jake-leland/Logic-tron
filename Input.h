@@ -14,17 +14,12 @@ extern int PADDING_SIDE;
  * We expect only three to be initialized per window
  */
 class Input : public Gate {
-    //Vector<bool> table; Inherited from gate
-    //int position; Inherited from gate
     Line input_line;
     Text input_label;
     
 public:
     Input(int, int);
     Input();
-    
-    //Vector<bool> getTable() const {return table;} Inherited from gate
-    //int getPosition() const {return p;} Inherited from gate
     
     void draw_lines() const;
 };

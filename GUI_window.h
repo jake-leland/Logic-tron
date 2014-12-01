@@ -34,6 +34,8 @@ public:
     void rm_line(); 
 };
 
+// The GUI_window is where the bulk of the interaction happens
+// This window contains the circuit diagram and all of the toolbars/buttons with which the user can interact
 class GUI_window : Graph_lib::Window{
     TT_window tt;
     int scale;
@@ -49,16 +51,12 @@ class GUI_window : Graph_lib::Window{
     Button save;
     In_box filename;
     vector<Button*> input_buttons;
-    
-    //Vector_ref<Gate> gates; // future implementation with the Gate class
     vector<Gate *> gates;
-    
+    Text instr;
     int input1_to_next = -1;
     int input2_to_next = -1;
 //    Text * in1_text;
 //    Text * in2_text;
-    //   Vector_ref<Gate> gates1; // future implementation with the Gate class
-    //   Vector_ref<Circle> gates; // for now
     Input i1;
     Input i2;
     Input i3;
@@ -73,8 +71,6 @@ public:
     static void cb_click(Address, Address);
     void click(Address);
     
-    
-    // void add_gate(String);
     void add_AND_gate();
     void add_OR_gate();
     void add_NOT_gate();
