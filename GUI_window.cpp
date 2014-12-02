@@ -36,6 +36,7 @@ void Line_stack::add(Point p1, Point p2) {
 }
 
 void Line_stack::rm_line() {
+    if(v.empty()) return;
     delete v.at(v.size() - 1);
     v.pop_back();
 }
@@ -55,7 +56,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	seperator(Point(0, .8 * y_max()), Point(x_max(), .8 * y_max())),
 	input_lines(),
 
-//Button initialization. Self explanitory
+//Button initialization. Self explanatory
 	add_AND(Point(x_max() / 2 - 400, y_max() - 125), 100, 50, "AND",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_AND_gate(); }),
@@ -71,6 +72,9 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	save(Point(x_max() - 150, y_max() - 100), 50, 25, "Save",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).save_file(); }),
+	undo(Point(x_max() - 200, y_max() - 75), 50, 25, "Undo",
+		[](Address, Address pw) {
+		    reference_to<GUI_window>(pw).undo_line();}),
 
 //In-box for typing filename of file to read/write
 	filename(Point(x_max() - 200, y_max() - 125), 100, 25, "filename"),
@@ -103,6 +107,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(add_NOT);
     attach(open);
     attach(save);
+    attach(undo);
     attach(filename);
     attach(instr);
         
@@ -232,6 +237,18 @@ void GUI_window::add_NOT_gate(){
         input2_to_next = -1;
         redraw();
     }
+}
+
+void GUI_window::undo_line(){
+    if(gates.size() <= 3) return;
+    detach(*gates.back());
+    delete gates.back();
+    gates.pop_back();
+    
+    rm_btn();
+    rm_line();
+    tt.rm_column();
+    redraw();
 }
 
 void GUI_window::read_file() {

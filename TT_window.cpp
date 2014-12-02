@@ -68,6 +68,7 @@ void TT_window::rm_column(){
 	delete (*it);
     }
     columns.pop_back();
+    redraw();
 }
 
 TT_window::~TT_window(){

@@ -51,6 +51,7 @@ class GUI_window : Graph_lib::Window{
     Button add_NOT;
     Button open;
     Button save;
+    Button undo;
     
     In_box filename;
     vector<Button*> input_buttons;
@@ -77,7 +78,7 @@ public:
     void add_OR_gate();
     void add_NOT_gate();
     void add_line(int i);
-    
+    void undo_line();
     void add_gate(String);
     void read_file();
     void save_file();
