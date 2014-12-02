@@ -18,5 +18,5 @@ public:
 
     void add_column(Gate*);
     void rm_column();
-    //~TT_window();
+    ~TT_window();
 };

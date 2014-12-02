@@ -327,5 +327,10 @@ void GUI_window::rm_line(){
     input_lines.rm_line();
 }
 GUI_window::~GUI_window(){
-    
+    for(Button* b : input_buttons){
+	delete b;
+    }
+    for(int i = 3; i < gates.size(); ++i){
+	
+    }
 }

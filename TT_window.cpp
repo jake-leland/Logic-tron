@@ -62,3 +62,17 @@ void TT_window::rm_column(){
     }
     columns.pop_back();
 }
+
+TT_window::~TT_window(){
+    for(Rectangle * r : rects){
+	delete r;
+    }
+    for(Text * t : headers){
+	delete t;
+    }
+    for( vector<Text*> v : columns){
+	for( Text* t : v){
+	    delete t;
+	}
+    }
+}

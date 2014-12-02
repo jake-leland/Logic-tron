@@ -28,7 +28,6 @@ protected:
     Operand t;
     Vector<bool> table;
     int p;
-    Text * in_text;
     
 public:
     
