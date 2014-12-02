@@ -10,9 +10,8 @@ extern int SCALE;
 extern int PADDING_TOP;
 extern int PADDING_SIDE;
 
-/* Input class - A specialization of gate that is initialized with the GUI window
- * We expect only three to be initialized per window
- */
+// Input class - A specialization of gate that is initialized with the GUI window
+// We expect only three to be initialized per window
 class Input : public Gate {
     Line input_line;
     Text input_label;

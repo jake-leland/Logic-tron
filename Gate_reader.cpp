@@ -1,3 +1,5 @@
+//Gate_reader.cpp
+
 #include <regex>
 #include <string>
 
@@ -53,31 +55,29 @@ void Gate_Reader::get_positions(smatch& matches) {
     }
 }
 
-/* !!!!!!!!!! FUNCTION LENGTH !!!!!!!!!! */
+
 void Gate_Reader::Read_file(){
     int lineno = 0;
     try{
-	if(!infile.is_open()) throw runtime_error("File not opened");
-	for(string line; std::getline(infile,line); infile.good()){
-	    lineno++;
-	    smatch matches;
-	    if(regex_match(line,matches,gate_pat)){
-		get_operand(matches);
-		get_positions(matches);
-		ops.push_back(nextOp);
-		in1.push_back(nextIn1);
-		in2.push_back(nextIn2);
-	    } else {
-		throw syntax_error(lineno);
-	    }
-	}
-	if(infile.bad()) throw runtime_error("Error reading file");
+        if(!infile.is_open()) throw runtime_error("File not opened");
+        for(string line; std::getline(infile,line); infile.good()){
+            lineno++;
+            smatch matches;
+            if(regex_match(line,matches,gate_pat)){
+                get_operand(matches);
+                get_positions(matches);
+                ops.push_back(nextOp);
+                in1.push_back(nextIn1);
+                in2.push_back(nextIn2);
+            } else throw syntax_error(lineno);
+        }
+        if(infile.bad()) throw runtime_error("Error reading file");
     } catch(Gate_Reader::syntax_error& s){
-	cerr << "Exception thrown reading line "<< lineno << ": " <<s.what();
+        cerr << "Exception thrown reading line "<< lineno << ": " <<s.what();
     } catch(runtime_error& e) {
-	cout << "Read_file exception: " << e.what();
-	throw e;
+        cout << "Read_file exception: " << e.what();
+        throw e;
     } catch (...) {
-	throw;
+        throw;
     }
 }
