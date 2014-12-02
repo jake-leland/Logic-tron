@@ -42,23 +42,25 @@ class GUI_window : Graph_lib::Window{
     int label_size;
     int padding_top;
     int padding_side;
+    
     Line_stack input_lines;
     Line seperator;
+    
     Button add_AND;
     Button add_OR;
     Button add_NOT;
     Button open;
     Button save;
+    
     In_box filename;
     vector<Button*> input_buttons;
     vector<Gate *> gates;
+    
     Text instr;
     int input1_to_next = -1;
     int input2_to_next = -1;
-//    Text * in1_text;
-//    Text * in2_text;
     Input i1;
-    Input i2;
+    Input i2;s
     Input i3;
     
     void clear_board();

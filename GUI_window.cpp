@@ -54,6 +54,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	padding_side(w / 25), // space between the side of the window and the input lines
 	seperator(Point(0, .8 * y_max()), Point(x_max(), .8 * y_max())),
 	input_lines(),
+
 //Button initialization. Self explanitory
 	add_AND(Point(x_max() / 2 - 400, y_max() - 125), 100, 50, "AND",
 		[](Address, Address pw) {
@@ -70,16 +71,18 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	save(Point(x_max() - 150, y_max() - 100), 50, 25, "Save",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).save_file(); }),
+
 //In-box for typing filename of file to read/write
 	filename(Point(x_max() - 200, y_max() - 125), 100, 25, "filename"),
+
 //Instructional text to assist the user
     instr(Point(40,y_max()-25),"First, click the numbered buttons corresponding to the desired inputs for the new gate. Then, click the button corresponding to the desired gate type."),
+
 //Initialize three initial circuit inputs (A, B, and C)
 	i1(1, x_max()),
 	i2(2, x_max()),
-	i3(3, x_max())/*,
-	in1_text( new Text(Point(0,0),"") ),
-	in2_text( new Text(Point(0,0),"") ) */ {
+	i3(3, x_max()){
+        
 //Attach circuit inputs
     attach(i1);
     gates.push_back(&i1);
@@ -90,6 +93,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(i3);
     gates.push_back(&i3);
     tt.add_column(&i3);
+        
 //Attach toolbar at the bottom of the window
     seperator.set_color(Color::black);
     seperator.set_style(Line_style::dash);
@@ -101,6 +105,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(save);
     attach(filename);
     attach(instr);
+        
 //Initialize the first three input buttons
     for (int i = 1; i < 4; ++i) {
 	Point btnPoint(x_max() - padding_side + scale / 3,
@@ -131,25 +136,9 @@ void GUI_window::click(Address b)
     String button_label = button->label();
     
     if(isdigit(button_label[0])) {
-//	detach(*in1_text);
-//	delete in1_text;
-//	detach(*in2_text);
-//	delete in2_text;
-//	if(input1_to_next > 0) gates[input1_to_next-1].in_text.set_label("2");
-//	if(input2_to_next > 0) {
-//	    gates[input2_to_next-1].in_text.set_label("");
-//	}
+
         input2_to_next = input1_to_next;
         input1_to_next = stoi(button_label);
-//	gates[input1_to_next-1].in_text.set_label("1");
-//	in1_text = new Text(
-//		Point(x_max() - padding_side + 4*scale/3, 
-//		padding_top +input1_to_next*scale - scale/2),"1");
-//	in2_text = new Text(
-//		Point(x_max() - padding_side + 4*scale/3,
-//		padding_top +input2_to_next*scale - scale/2), "2");
-//	if(input2_to_next > 0) attach(*in2_text);
-//	attach(*in1_text);
 	
     } else {
         cerr << "error: no action set for button\n";
@@ -194,10 +183,6 @@ void GUI_window::add_AND_gate() {
 	tt.add_column(gates[n]);
 	add_line(n + 1);
 
-//	gates[input1_to_next-1].in_text.set_label("");
-//	gates[input2_to_next-1].in_text.set_label("");
-//	detach(gates[input1_to_next -1].in_text);
-//	detach(gates[input2_to_next -1].in_text);
 	input1_to_next = -1;
 	input2_to_next = -1;
 	redraw();
@@ -249,7 +234,6 @@ void GUI_window::add_NOT_gate(){
     }
 }
 
-/* !!!!!!!!!! FUNCTION LENGTH !!!!!!!!!! */
 void GUI_window::read_file() {
     try {
 	std::ifstream is(filename.get_string() , std::ifstream::in);
@@ -264,17 +248,10 @@ void GUI_window::read_file() {
 	    input2_to_next = ins2[i];
 	    Operand op = ops[i];
 	    switch (op) {
-		case Operand::AND:
-		    add_AND_gate();
-		    break;
-		case Operand::OR:
-		    add_OR_gate();
-		    break;
-		case Operand::NOT:
-		    add_NOT_gate();
-		    break;
-		default:
-		    break;
+		case Operand::AND:add_AND_gate();break;
+        case Operand::OR:add_OR_gate();break;
+		case Operand::NOT:add_NOT_gate();break;
+		default:break;
 	    }
 	}
 	is.close();
