@@ -54,11 +54,11 @@ public:
     bool is_gate(Gate* i1, Operand t);
     
     //draw gates and lines
-    void draw_OR_gate();
-    void draw_NOT_gate();
-    void draw_AND_gate();
-    void draw_one_line();
-    void draw_two_lines();
+    void draw_OR_gate(Point& ul) const;
+    void draw_NOT_gate(Point& ul) const;
+    void draw_AND_gate(Point& ul) const;
+    void draw_one_line(Point& ul, int iny1) const;
+    void draw_two_lines(Point& ul, int iny1, int iny2) const;
 };
 
 //read gates

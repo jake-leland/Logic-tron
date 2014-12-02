@@ -61,11 +61,11 @@ void Gate::draw_lines() const{
     
     //Draw gate symbol
     if(t==Operand::AND){
-        draw_AND_gate();
+        draw_AND_gate(ul);
     } else if (t==Operand::OR){
-        draw_OR_gate();
+        draw_OR_gate(ul);
     } else if (t==Operand::NOT){
-        draw_NOT_gate();
+        draw_NOT_gate(ul);
     }
     
     //Draw lines to input lines
@@ -73,27 +73,27 @@ void Gate::draw_lines() const{
     int iny2 = 0;
     if(i2) iny2 = GATE_PADDING_TOP + SCALE*((i2->p)-3) - .5*SCALE;
     if(t == Operand::NOT){
-        draw_one_line();
+        draw_one_line(ul, iny1);
     } else {
-        draw_two_lines();
+        draw_two_lines(ul, iny1, iny2);
     }
     fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x+(.8*SCALE)/2,GATE_PADDING_TOP+SCALE/2+SCALE*(p-4));
 
 }
 
-void Gate::draw_OR_gate(){
+void Gate::draw_OR_gate(Point& ul) const{
     fl_arc(ul.x,ul.y-(.6*SCALE)/2,.8*SCALE,.9*SCALE,180,360);
     fl_arc(ul.x,ul.y-(.6*SCALE)/2,.8*SCALE,.6*SCALE,180,360);
     fl_line(ul.x+(.8*SCALE)/4,ul.y,ul.x+(.8*SCALE)/4,ul.y+(.6*SCALE)/3);
     fl_line(ul.x+3*(.8*SCALE)/4,ul.y,ul.x+3*(.8*SCALE)/4,ul.y+(.6*SCALE)/3);
 }
-void Gate::draw_NOT_gate(){
+void Gate::draw_NOT_gate(Point& ul) const{
     fl_line(ul.x,ul.y,ul.x+(.8*SCALE),ul.y);
     fl_line(ul.x+(.8*SCALE),ul.y,ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE));
     fl_line(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE),ul.x,ul.y);
     fl_circle(ul.x+(.8*SCALE)/2,ul.y+(.6*SCALE), SCALE/10);
 }
-void Gate::draw_AND_gate(){
+void Gate::draw_AND_gate(Point& ul) const{
     fl_arc(ul.x,ul.y,.8*SCALE,.6*SCALE,180,360);
     fl_line(ul.x,ul.y+(.6*SCALE)/2,ul.x,ul.y);
     fl_line(ul.x,ul.y,ul.x+(.8*SCALE),ul.y);
@@ -101,11 +101,11 @@ void Gate::draw_AND_gate(){
     
 }
 
-void Gate::draw_one_line(){
-    fl_line(ul.x+(.8*SCALE)/2s, ul.y, ul.x+(.8*SCALE)/2, iny1);
+void Gate::draw_one_line(Point& ul, int iny1) const{
+    fl_line(ul.x+(.8*SCALE)/2, ul.y, ul.x+(.8*SCALE)/2, iny1);
     fl_circle(ul.x+(.8*SCALE)/2, iny1, 1);
 }
-void Gate::draw_two_lines(){
+void Gate::draw_two_lines(Point& ul, int iny1, int iny2) const{
     fl_line(ul.x+(.8*SCALE)/4,ul.y,ul.x+(.8*SCALE)/4, iny1);
     fl_circle(ul.x+(.8*SCALE)/4, iny1, 1);
     fl_line(ul.x+3*(.8*SCALE)/4,ul.y,ul.x+3*(.8*SCALE)/4, iny2);

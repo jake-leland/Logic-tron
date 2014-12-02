@@ -60,7 +60,7 @@ class GUI_window : Graph_lib::Window{
     int input1_to_next = -1;
     int input2_to_next = -1;
     Input i1;
-    Input i2;s
+    Input i2;
     Input i3;
     
     void clear_board();
