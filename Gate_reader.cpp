@@ -25,16 +25,18 @@
  * onto the vectors. Once every line is read without error the vectors are ready to
  * be returned.
  */
+//Pattern declaration to read files
 regex Gate_Reader::gate_pat{R"(\d+:\s*\(([[:alpha:]]+),(\d+)(,(\d+))?\))"};
 
+//Constructor
 Gate_Reader::Gate_Reader(ifstream& is) : infile(is),ops(),in1(),in2() {
     infile.setf(ios_base::skipws);
 }
-
+//Open file
 void Gate_Reader::Open(String file){
     infile.open(file.c_str());
 }
-
+//Read the next operation from a match
 void Gate_Reader::get_operand(smatch& matches){
     string op = matches.str(1);
     cout << op << endl;
@@ -43,7 +45,7 @@ void Gate_Reader::get_operand(smatch& matches){
     else if(op == "NOT") nextOp = Operand::NOT;
     else {throw syntax_error("Unknown operand");}
 }
-
+//Read the next positions from a match
 void Gate_Reader::get_positions(smatch& matches) {
     nextIn1 = stoi(matches.str(2));
     if(nextOp != Operand::NOT) {
@@ -55,15 +57,15 @@ void Gate_Reader::get_positions(smatch& matches) {
     }
 }
 
-
+//Read the file given in the istream
 void Gate_Reader::Read_file(){
     int lineno = 0;
     try{
-        if(!infile.is_open()) throw runtime_error("File not opened");
+        if(!infile.is_open()) throw runtime_error("File not opened"); //Check file is open before reading lines
         for(string line; std::getline(infile,line); infile.good()){
-            lineno++;
+            lineno++; //Keep track of lines
             smatch matches;
-            if(regex_match(line,matches,gate_pat)){
+            if(regex_match(line,matches,gate_pat)){ //Check the line read is a regex match
                 get_operand(matches);
                 get_positions(matches);
                 ops.push_back(nextOp);
