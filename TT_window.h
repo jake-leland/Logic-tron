@@ -13,7 +13,7 @@ class TT_window : Graph_lib::Window{
     vector<Rectangle*> rects;
     vector<Text*> headers;
     vector< vector<Text*> > columns;
-    vector<bool> desiredTable;
+    vector<string> desiredTable;
     
     Line l;
     In_box desired_in;

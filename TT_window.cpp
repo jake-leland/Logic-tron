@@ -58,6 +58,7 @@ void TT_window::add_column(Gate* g) {
     }
      
     attach(l); // dotted line seperating the header text from the table contents
+	match_truth_table(g);
     redraw();
 }
 
@@ -90,6 +91,30 @@ void TT_window::rm_column(){
 
 bool TT_window::match_truth_table(Gate* g){
     Vector<bool> table = g->getTable();
+    bool matches = true;
+    for(int i = 0; i<table.size(); ++i){
+		bool b = table[i];
+		if(desiredTable[i]=="0")if(b) matches=false;
+		else if(!b) matches=false;
+ 
+    }
+
+	vector<Rectangle*> r;
+    if(matches){
+        r.push_back(new Rectangle(Point(600,250),60,60));
+        r[r.size()-1]->set_color(Color::black);
+	    r[r.size()-1]->set_fill_color(Color::green);
+	    attach(*r[r.size()-1]);
+        //attach(new Text(Point(610,410),"Yes"));
+    }
+    else{
+        r.push_back(new Rectangle(Point(600,250),60,60));
+        r[r.size()-1]->set_color(Color::black);
+	    r[r.size()-1]->set_fill_color(Color::red);
+	    attach(*r[r.size()-1]);
+        //attach(new Text(Point(610,410),"No"));
+    }
+    
 }
 void TT_window::set_goal_cb(){
     std::regex p{R"([01]{8})"};
@@ -101,11 +126,9 @@ void TT_window::set_goal_cb(){
     }
 }
 void TT_window::update_desired_table(String s){
-    Vector<bool> table;
+    desiredTable.clear();
     for(int i = 0; i<s.size(); ++i) {
-	String sub = s.substr(i,1);
-	if(sub=="0") table.push_back(false);
-	else table.push_back(true);
+	desiredTable.push_back(s.substr(i,1));
     }
     for(Text* t : desired_column){
 	detach(*t);
@@ -113,12 +136,12 @@ void TT_window::update_desired_table(String s){
     }
     desired_column.clear();
     
-    for(bool b : table) {
-        String b_str(b?"1":"0"); // converts boolean to "0" or "1"
-        desired_column.push_back(new Text(Point(560,56+20*desired_column.size()),b_str));
+    for(String s : desiredTable) {
+        desired_column.push_back(new Text(Point(560,56+20*desired_column.size()),s));
         desired_column.back()->set_color(Color::white);
         attach(*(desired_column.back()));
     }
+    
     redraw();
 
 }
