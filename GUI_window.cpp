@@ -55,6 +55,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	padding_side(w / 25), // space between the side of the window and the input lines
 	seperator(Point(0, .8 * y_max()), Point(x_max(), .8 * y_max())),
 	input_lines(),
+	in1txt(NULL),in2txt(NULL),
 
 //Button initialization. Self explanatory
 	add_AND(Point(x_max() / 2 - 400, y_max() - 125), 100, 50, "AND",

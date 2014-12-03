@@ -63,6 +63,8 @@ class GUI_window : Graph_lib::Window{
     Input i1;
     Input i2;
     Input i3;
+    Text* in1txt;
+    Text* in2txt;
     
     void clear_board();
     void rm_btn();

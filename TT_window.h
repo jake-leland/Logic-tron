@@ -13,7 +13,12 @@ class TT_window : Graph_lib::Window{
     vector<Text*> headers;
     vector< vector<Text*> > columns;
     vector<bool> desiredTable;
+    
     Line l;
+    In_box desired_in;
+    Rectangle desired_rect;
+    Text desired_header;
+    vector<Text*> desired_column;
 public:
     TT_window(int w = 700, int h = 300);
 
