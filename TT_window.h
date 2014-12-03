@@ -22,7 +22,7 @@ class TT_window : Graph_lib::Window{
     vector<Text*> desired_column;
     Button set_goal;
 public:
-    TT_window(int w = 700, int h = 300);
+    TT_window(int w = 610, int h = 300);
     void set_goal_cb();
     void add_column(Gate*);
     void rm_column();

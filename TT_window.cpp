@@ -92,27 +92,32 @@ void TT_window::rm_column(){
 bool TT_window::match_truth_table(Gate* g){
     Vector<bool> table = g->getTable();
     bool matches = true;
-    for(int i = 0; i<table.size(); ++i){
-		bool b = table[i];
-		if(desiredTable[i]=="0")if(b) matches=false;
-		else if(!b) matches=false;
- 
+	int n = 0;
+    for(bool b: table){
+		String b_str(b?"1":"0");
+		if(desiredTable[n]!=b_str) matches=false;
+		++n;
     }
 
 	vector<Rectangle*> r;
+	vector<Text*> t;
     if(matches){
-        r.push_back(new Rectangle(Point(600,250),60,60));
+        r.push_back(new Rectangle(Point(360,250),220,25));
         r[r.size()-1]->set_color(Color::black);
-	    r[r.size()-1]->set_fill_color(Color::green);
+	    r[r.size()-1]->set_fill_color(Color::dark_green);
 	    attach(*r[r.size()-1]);
-        //attach(new Text(Point(610,410),"Yes"));
+	    t.push_back(new Text(Point(385,268),"Latest gate matches goal!"));
+        t[t.size()-1]->set_color(Color::white);
+	    attach(*t[t.size()-1]);
     }
     else{
-        r.push_back(new Rectangle(Point(600,250),60,60));
+        r.push_back(new Rectangle(Point(360,250),220,25));
         r[r.size()-1]->set_color(Color::black);
 	    r[r.size()-1]->set_fill_color(Color::red);
 	    attach(*r[r.size()-1]);
-        //attach(new Text(Point(610,410),"No"));
+	    t.push_back(new Text(Point(365,268),"Latest gate does not match goal."));
+        t[t.size()-1]->set_color(Color::white);
+	    attach(*t[t.size()-1]);
     }
     
 }
@@ -122,7 +127,6 @@ void TT_window::set_goal_cb(){
     string in = desired_in.get_string();
     if(regex_match(in, matches, p)){
 	update_desired_table(in);
-	cout << "Regex match " << in << endl;
     }
 }
 void TT_window::update_desired_table(String s){
@@ -137,7 +141,7 @@ void TT_window::update_desired_table(String s){
     desired_column.clear();
     
     for(String s : desiredTable) {
-        desired_column.push_back(new Text(Point(560,56+20*desired_column.size()),s));
+        desired_column.push_back(new Text(Point(565,56+20*desired_column.size()),s));
         desired_column.back()->set_color(Color::white);
         attach(*(desired_column.back()));
     }
