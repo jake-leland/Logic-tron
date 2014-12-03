@@ -1,5 +1,6 @@
 // TT_window.h
 
+#include <regex>
 #include "std_lib_facilities_4.h"
 #include "Window.h"
 #include "Graph.h"
@@ -19,9 +20,10 @@ class TT_window : Graph_lib::Window{
     Rectangle desired_rect;
     Text desired_header;
     vector<Text*> desired_column;
+    Button set_goal;
 public:
     TT_window(int w = 700, int h = 300);
-
+    void set_goal_cb();
     void add_column(Gate*);
     void rm_column();
     bool match_truth_table(Gate*);

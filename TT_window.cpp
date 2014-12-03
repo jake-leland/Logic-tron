@@ -1,8 +1,8 @@
 // TT_window.cpp
 
+#include <FL/Fl_Button.H>
 #include "Gate.h"
 #include "TT_window.h"
-#include <FL/Fl_Button.H>
 
 
 TT_window::TT_window(int w, int h) : 
@@ -10,13 +10,18 @@ TT_window::TT_window(int w, int h) :
 	desired_rect(Point(550,15),40,190),
 	desired_header(Point(555,32),"Goal"),
 	l(Point(15,39),Point(590,39)),
-	desired_in( Point(150, y_max()-50),150,25,"Desired Table" ) {
+	desired_in( Point(150, y_max()-50),150,25,"Desired Table" ),
+	set_goal( Point(300, y_max()-50),50,25, "Set",
+		[](Address, Address pw) {
+		    reference_to<TT_window>(pw).set_goal_cb(); } )
+{
     desired_rect.set_color(Color::black);
     desired_rect.set_fill_color(Color::magenta);
     desired_header.set_color(Color::white);
     attach(desired_rect);
     attach(desired_header);
     attach(desired_in);
+    attach(set_goal);
     l.set_color(Color::white);
     l.set_style(Line_style::dash);
     redraw();
@@ -86,22 +91,35 @@ void TT_window::rm_column(){
 bool TT_window::match_truth_table(Gate* g){
     Vector<bool> table = g->getTable();
 }
-
+void TT_window::set_goal_cb(){
+    std::regex p{R"([01]{8})"};
+    smatch matches;
+    string in = desired_in.get_string();
+    if(regex_match(in, matches, p)){
+	update_desired_table(in);
+	cout << "Regex match " << in << endl;
+    }
+}
 void TT_window::update_desired_table(String s){
-	Vector<bool> table;
-	for(int i = 0; i<s.size(); ++i) {
-		String sub = s.substr(i,1);
-		if(sub=="0") table.push_back(false);
-		else table.push_back(true);
-	}
-
+    Vector<bool> table;
+    for(int i = 0; i<s.size(); ++i) {
+	String sub = s.substr(i,1);
+	if(sub=="0") table.push_back(false);
+	else table.push_back(true);
+    }
+    for(Text* t : desired_column){
+	detach(*t);
+	delete t;
+    }
+    desired_column.clear();
+    
     for(bool b : table) {
         String b_str(b?"1":"0"); // converts boolean to "0" or "1"
         desired_column.push_back(new Text(Point(560,56+20*desired_column.size()),b_str));
         desired_column.back()->set_color(Color::white);
         attach(*(desired_column.back()));
     }
-    
+    redraw();
 
 }
 
