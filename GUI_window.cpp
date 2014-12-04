@@ -58,13 +58,13 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	in1txt(NULL),in2txt(NULL),
 
 //Button initialization. Self explanatory
-	add_AND(Point(x_max() / 2 - 400, y_max() - 125), 100, 50, "AND",
+	add_AND(Point(x_max()/2 - 400, y_max() - 125), 100, 50, "AND",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_AND_gate(); }),
-	add_OR(Point(x_max() / 2 - 200, y_max() - 125), 100, 50, "OR",
+	add_OR(Point(x_max()/2 - 250, y_max() - 125), 100, 50, "OR",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_OR_gate(); }),
-	add_NOT(Point(x_max() / 2, y_max() - 125), 100, 50, "NOT",
+	add_NOT(Point(x_max()/2 - 100, y_max() - 125), 100, 50, "NOT",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).add_NOT_gate(); }),
 	open(Point(x_max() - 200, y_max() - 100), 50, 25, "Open",
@@ -73,7 +73,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	save(Point(x_max() - 150, y_max() - 100), 50, 25, "Save",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).save_file(); }),
-	undo(Point(x_max() - 200, y_max() - 75), 50, 25, "Undo",
+	undo(Point(x_max()/2 + 100, y_max() - 125), 50, 50, "Undo",
 		[](Address, Address pw) {
 		    reference_to<GUI_window>(pw).undo_line();}),
 
@@ -81,7 +81,10 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
 	filename(Point(x_max() - 200, y_max() - 125), 100, 25, "filename"),
 
 //Instructional text to assist the user
-    instr(Point(40,y_max()-25),"First, click the numbered buttons corresponding to the desired inputs for the new gate. Then, click the button corresponding to the desired gate type."),
+    instr(Point(40,y_max()-40),"First, click the numbered buttons corresponding to the desired inputs for the new gate. Then, click the button corresponding to the desired gate type."),
+
+//Credit to the developers
+    credit(Point(170,y_max()-20),"(Designed and developed by CSCE 121 team H4: Cassie Bub, Jake Leland, and Humberto Munoz-Bauza.)"),
 
 //Initialize three initial circuit inputs (A, B, and C)
 	i1(1, x_max()),
@@ -111,6 +114,7 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(undo);
     attach(filename);
     attach(instr);
+    attach(credit);
         
 //Initialize the first three input buttons
     for (int i = 1; i < 4; ++i) {

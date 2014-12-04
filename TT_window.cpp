@@ -10,8 +10,8 @@ TT_window::TT_window(int w, int h) :
 	desired_rect(Point(550,15),40,190),
 	desired_header(Point(555,32),"Goal"),
 	l(Point(15,39),Point(590,39)),
-	desired_in( Point(150, y_max()-50),150,25,"Desired Table" ),
-	set_goal( Point(300, y_max()-50),50,25, "Set",
+	desired_in( Point(120, y_max()-50),150,25,"Desired Table" ),
+	set_goal( Point(270, y_max()-50),50,25, "Set",
 		[](Address, Address pw) {
 		    reference_to<TT_window>(pw).set_goal_cb(); } )
 {
@@ -32,24 +32,19 @@ TT_window::TT_window(int w, int h) :
 // function accepts a gate pointer, then retrieves the truth table information from that gate
 // a new column is automatically added that displays this truth table
 void TT_window::add_column(Gate* g) {
-    
     rects.push_back(new Rectangle(Point(15+20*(rects.size()),15),20,190));
     rects[rects.size()-1]->set_color(Color::black);
-    
-    if(rects.size()%2 == 0) {
-        rects[rects.size()-1]->set_fill_color(Color::blue);
-    } else {
-        rects[rects.size()-1]->set_fill_color(Color::dark_blue);
-    }
-    
+    if(rects.size()%2 == 0) rects[rects.size()-1]->set_fill_color(Color::blue);
+    else rects[rects.size()-1]->set_fill_color(Color::dark_blue); // alternating column color, to make it easier to see
+
     attach(*rects[rects.size()-1]); // background color
-    headers.push_back(new Text(Point(21+20*(headers.size()),32),to_string(g->getPosition())));
+    if(g->getPosition() > 9) headers.push_back(new Text(Point(17+20*(headers.size()),32),to_string(g->getPosition()))); // shifts text over if it's two digits
+    else headers.push_back(new Text(Point(21+20*(headers.size()),32),to_string(g->getPosition())));
     headers[headers.size()-1]->set_color(Color::white);
     attach(*headers[headers.size()-1]);
     
     columns.push_back(vector<Text*>());
     Vector<bool> table = g->getTable();
-    
     for(bool b : table) {
         String b_str(b?"1":"0"); // converts boolean to "0" or "1"
         columns[columns.size()-1].push_back(new Text(Point(21+20*(columns.size()-1),56+20*columns[columns.size()-1].size()-1),b_str));
@@ -89,7 +84,7 @@ void TT_window::rm_column(){
     redraw();
 }
 
-bool TT_window::match_truth_table(Gate* g){
+void TT_window::match_truth_table(Gate* g){
     Vector<bool> table = g->getTable();
     bool matches = true;
 	int n = 0;
@@ -119,8 +114,8 @@ bool TT_window::match_truth_table(Gate* g){
         t[t.size()-1]->set_color(Color::white);
 	    attach(*t[t.size()-1]);
     }
-    
 }
+
 void TT_window::set_goal_cb(){
     std::regex p{R"([01]{8})"};
     smatch matches;

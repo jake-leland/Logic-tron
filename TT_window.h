@@ -26,7 +26,7 @@ public:
     void set_goal_cb();
     void add_column(Gate*);
     void rm_column();
-    bool match_truth_table(Gate*);
+    void match_truth_table(Gate*);
     void update_desired_table(String s);
     ~TT_window();
 };

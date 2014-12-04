@@ -58,6 +58,7 @@ class GUI_window : Graph_lib::Window{
     vector<Gate *> gates;
     
     Text instr;
+    Text credit;
     int input1_to_next = -1;
     int input2_to_next = -1;
     Input i1;
