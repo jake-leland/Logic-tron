@@ -113,7 +113,9 @@ GUI_window::GUI_window(int w, int h, int s) : Window(w, h, "Logic-tron"),
     attach(save);
     attach(undo);
     attach(filename);
+    instr.set_color(Color::black);
     attach(instr);
+    credit.set_color(Color::black);
     attach(credit);
         
 //Initialize the first three input buttons
